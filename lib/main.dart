@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'new_page.dart'; // Import the new page
+import 'album_widget.dart';
+import 'package:untitled3/data/release_card_data.dart';
+
+
 
 void main() {
   runApp(MyApp());
@@ -32,31 +36,6 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  final List<Map<String, String>> reviews = [
-    {
-      'image': 'assets/grace.jpg', // Replace with local image asset
-      'title': 'Review: Album One',
-      'description': 'An amazing journey through sound and emotion.',
-    },
-    {
-      'image': 'assets/placeholder.jpg', // Replace with local image asset
-      'title': 'Review: Album Two',
-      'description': 'A bold, experimental record full of surprises.',
-    },
-  ];
-
-  final List<Map<String, String>> lists = [
-    {
-      'image': 'assets/placeholder.jpg', // Replace with local image asset
-      'title': 'Top 10 Albums of 2025',
-      'description': 'A curated list of the best albums released this year.',
-    },
-    {
-      'image': 'assets/placeholder.jpg', // Replace with local image asset
-      'title': 'Best Chill Albums',
-      'description': 'Albums perfect for a relaxing evening.',
-    },
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.home),
+              leading: Icon(Icons.person),
               title: Text('Profile'),
               onTap: () {
                 Navigator.push(
@@ -124,6 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
+              leading: Icon(Icons.access_time),
               title: Text('Activity'),
               onTap: () {
                 Navigator.push(
@@ -135,6 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
+              leading: Icon(Icons.rate_review),
               title: Text('Reviews'),
               onTap: () {
                 Navigator.push(
@@ -146,6 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
+              leading: Icon(Icons.list),
               title: Text('Lists'),
               onTap: () {
                 Navigator.push(
@@ -165,9 +147,12 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           children: [
             TabBar(
+              isScrollable: true,
               tabs: [
-                Tab(text: 'Reviews'),
-                Tab(text: 'Lists'),
+                Tab(text: 'Featured Reviews'),
+                Tab(text: 'Featured Lists'),
+                Tab(text: 'Friend\'s Reviews'),
+                Tab(text: 'Friend\'s Lists'),
               ],
             ),
             Expanded(
@@ -190,6 +175,11 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
+        backgroundColor: Colors.blue, // Set the background color here
+        selectedItemColor: Colors.black, // Default color for selected items
+        unselectedItemColor: Colors.black, // Color for unselected items
+        showUnselectedLabels: true, // Optionally show labels even when not selected
+        type: BottomNavigationBarType.fixed, // Ensures that we can have 4 items without issue
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -200,8 +190,16 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Search',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
+            icon: Icon(Icons.notifications),
+            label: 'Add',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle),
+            label: 'Charts',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle),
+            label: 'Profile',
           ),
         ],
       ),
@@ -216,48 +214,17 @@ class FeedList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
+    return ListView.builder(
       padding: EdgeInsets.all(16),
       itemCount: items.length,
-      separatorBuilder: (context, index) => SizedBox(height: 16),
       itemBuilder: (context, index) {
         final item = items[index];
-        return Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Image.asset(
-                item['image']!,
-                width: 200,
-                height: 200,
-                fit: BoxFit.cover,
-              ),
-            ),
-            SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    item['title']!,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    item['description']!,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey[700],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+        return CustomInfoCard(
+          imagePath: item['image'] ?? '',
+          name: item['title'] ?? '',
+          description: item['description'] ?? '',
+          reviewer: item['reviewer'] ?? '',
+          size: 150, // You can adjust the size here
         );
       },
     );
