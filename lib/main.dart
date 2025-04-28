@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'new_page.dart'; // Import the new page
 import 'album_widget.dart';
 import 'package:untitled3/data/release_card_data.dart';
-
+import 'bottom_nav.dart';
+import 'feed.dart';
 void main() {
   runApp(MyApp());
 }
@@ -177,65 +178,15 @@ class _MyHomePageState extends State<MyHomePage> {
           style: TextStyle(fontSize: 24),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
+      // Use the CustomBottomNavBar
+      bottomNavigationBar: CustomBottomNavBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        backgroundColor: Colors.blue, // Set the background color here
-        selectedItemColor: Colors.black, // Default color for selected items
-        unselectedItemColor: Colors.black, // Color for unselected items
-        showUnselectedLabels: true, // Optionally show labels even when not selected
-        type: BottomNavigationBarType.fixed, // Ensures that we can have 4 items without issue
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add),
-            label: 'Add',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.show_chart),
-            label: 'Charts',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Profile',
-          ),
-        ],
       ),
     );
   }
 }
 
-class FeedList extends StatelessWidget {
-  final List<Map<String, dynamic>> items;
-
-  const FeedList({Key? key, required this.items}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: EdgeInsets.all(16),
-      itemCount: items.length,
-      itemBuilder: (context, index) {
-        final item = items[index];
-        return CustomInfoCard(
-          imagePath: item['image'] ?? '',
-          name: item['title'] ?? '',
-          description: item['description'] ?? '',
-          reviewer: item['reviewer'] ?? '',
-          rating: item['rating'] as int? ?? 0,
-          size: 150, // You can adjust the size here
-        );
-      },
-    );
-  }
-}
 
 
 

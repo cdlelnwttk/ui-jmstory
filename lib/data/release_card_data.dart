@@ -31,12 +31,12 @@ final List<Map<String, dynamic>> reviews = [
 
 final List<Map<String, String>> lists = [
   {
-    'image': 'assets/placeholder.jpg', // Replace with local image asset
+    'image': 'assets/grace.jpg', // Replace with local image asset
     'title': 'Top 10 Albums of 2025',
     'description': 'A curated list of the best albums released this year.',
   },
   {
-    'image': 'assets/placeholder.jpg', // Replace with local image asset
+    'image': 'assets/grace.jpg', // Replace with local image asset
     'title': 'Best Chill Albums',
     'description': 'Albums perfect for a relaxing evening.',
   },
