@@ -1,9 +1,10 @@
-final List<Map<String, String>> reviews = [
+final List<Map<String, dynamic>> reviews = [
   {
     'image': 'assets/grace.jpg', // Replace with local image asset
     'title': 'Grace',
-    'description': 'An amazing journey through sound and emotion.',
-    'reviewer' : 'username'
+    'description': 'Why is not adding',
+    'reviewer' : 'username',
+    'rating': 5,
   },
   {
     'image': 'assets/youdpreferanastronaut.png', // Replace with local image asset
@@ -12,6 +13,17 @@ final List<Map<String, String>> reviews = [
   },
   {
     'image': 'assets/goo.jpg', // Replace with local image asset
+    'title': 'Goo',
+    'description': 'A bold, experimental record full of surprises.',
+  },
+  {
+    'image': 'assets/withoutasound.jpg', // Replace with local image asset
+    'title': 'Goo',
+    'description': 'A bold, experimental record full of surprises.',
+    'rating': 5,
+  },
+  {
+    'image': 'assets/mellon.jpg', // Replace with local image asset
     'title': 'Goo',
     'description': 'A bold, experimental record full of surprises.',
   },

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'item.dart';
 import 'edit_profile.dart';
+import 'album_widget.dart';
+import 'package:untitled3/data/release_card_data.dart';
 class NewPage extends StatefulWidget {
   final int initialTabIndex;
 
@@ -21,6 +22,7 @@ class _NewPageState extends State<NewPage> with SingleTickerProviderStateMixin {
     'assets/album2.jpg',
     'assets/album3.jpg',
   ];
+
 
   @override
   void initState() {
@@ -220,52 +222,12 @@ class _NewPageState extends State<NewPage> with SingleTickerProviderStateMixin {
                   ),
                 ),
                 // Reviews Tab
+                // Reviews Tab
                 SingleChildScrollView(
                   child: Column(
-                    children: List.generate(albumImages.length, (index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: InkWell(
-                          onTap: () => _navigateToAlbumDetail(albumImages[index]),
-                          child: Row(
-                            children: <Widget>[
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: Image.asset(
-                                  albumImages[index],
-                                  width: 100,
-                                  height: 100,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              SizedBox(width: 16),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Album Title $index',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    SizedBox(height: 8),
-                                    Text(
-                                      'This is a short review of the album.',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.black54,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    }),
+                    children: [
+                      FeedList(items: reviews),  // FeedList widget that uses items to display the reviews
+                    ],
                   ),
                 ),
                 // Lists Tab
@@ -364,6 +326,31 @@ class AlbumDetailPage extends StatelessWidget {
   }
 }
 
+class FeedList extends StatelessWidget {
+  final List<Map<String, dynamic>> items;
+
+  const FeedList({Key? key, required this.items}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      padding: EdgeInsets.all(16),
+      shrinkWrap: true, // Makes the ListView take only as much space as it needs
+      physics: NeverScrollableScrollPhysics(), // Disables scrolling for this ListView
+      itemCount: items.length,
+      itemBuilder: (context, index) {
+        final item = items[index];
+        return CustomInfoCard(
+          imagePath: item['image'] ?? '',
+          name: item['title'] ?? '',
+          description: item['description'] ?? '',
+          rating: item['rating'] as int? ?? 0,
+          size: 150,// Adjust the size here if necessary
+        );
+      },
+    );
+  }
+}
 
 
 

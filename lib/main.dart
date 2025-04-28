@@ -3,8 +3,6 @@ import 'new_page.dart'; // Import the new page
 import 'album_widget.dart';
 import 'package:untitled3/data/release_card_data.dart';
 
-
-
 void main() {
   runApp(MyApp());
 }
@@ -34,8 +32,15 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _selectedIndex = index;
     });
+    if (index == 4) {  // Profile tab is at index 4
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => NewPage(initialTabIndex: 0),  // Navigate to ProfilePage
+        ),
+      );
+    }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -190,11 +195,11 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Search',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
+            icon: Icon(Icons.add),
             label: 'Add',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
+            icon: Icon(Icons.show_chart),
             label: 'Charts',
           ),
           BottomNavigationBarItem(
@@ -208,7 +213,7 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class FeedList extends StatelessWidget {
-  final List<Map<String, String>> items;
+  final List<Map<String, dynamic>> items;
 
   const FeedList({Key? key, required this.items}) : super(key: key);
 
@@ -224,6 +229,7 @@ class FeedList extends StatelessWidget {
           name: item['title'] ?? '',
           description: item['description'] ?? '',
           reviewer: item['reviewer'] ?? '',
+          rating: item['rating'] as int? ?? 0,
           size: 150, // You can adjust the size here
         );
       },

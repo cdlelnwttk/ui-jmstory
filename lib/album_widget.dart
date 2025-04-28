@@ -6,15 +6,17 @@ class CustomInfoCard extends StatelessWidget {
   final String description;
   final double size;
   final String? reviewedBy; // Optional "reviewed by" text
-  final String? reviewer;  // Optional reviewer name
+  final String? reviewer;   // Optional reviewer name
+  final int? rating;        // Optional star rating (0–5)
 
   const CustomInfoCard({
     required this.imagePath,
     required this.name,
     required this.description,
     required this.size,
-    this.reviewedBy,   // Optional "reviewed by"
-    this.reviewer,     // Optional reviewer
+    this.reviewedBy,
+    this.reviewer,
+    this.rating,
     Key? key,
   }) : super(key: key);
 
@@ -30,12 +32,12 @@ class CustomInfoCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
               child: Text(
-                '$reviewedBy reviewed...', // Display reviewed by
+                '$reviewedBy reviewed...',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                   fontStyle: FontStyle.italic,
-                  color: Colors.grey[700],
+                  color: Colors.black,
                 ),
               ),
             ),
@@ -63,14 +65,30 @@ class CustomInfoCard extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 8),
-                    // Review By field (only shown if reviewer is provided)
+                    // Reviewer field (if provided)
                     if (reviewer != null)
                       Text(
-                        'Review By: $reviewer',
+                        'Reviewer: $reviewer',
                         style: TextStyle(
                           fontSize: 14,
                           fontStyle: FontStyle.italic,
-                          color: Colors.grey,
+                          color: Colors.black,
+                        ),
+                      ),
+                    // Stars (if rating is provided)
+                    if (rating != null)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 4.0),
+                        child: Row(
+                          children: List.generate(5, (index) {
+                            return Icon(
+                              index < rating!
+                                  ? Icons.star
+                                  : Icons.star_border,
+                              color: Colors.amber,
+                              size: 18,
+                            );
+                          }),
                         ),
                       ),
                     SizedBox(height: 8),
@@ -92,4 +110,6 @@ class CustomInfoCard extends StatelessWidget {
     );
   }
 }
+
+
 

@@ -28,7 +28,6 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  image_picker: ^0.8.5+3
   flutter:
     sdk: flutter
 
@@ -58,6 +57,8 @@ flutter:
     - assets/grace.jpg
     - assets/youdpreferanastronaut.png
     - assets/goo.jpg
+    - assets/withoutasound.jpg
+    - assets/mellon.jpg
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
