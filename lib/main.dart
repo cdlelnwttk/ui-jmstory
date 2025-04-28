@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'new_page.dart';  // Import the new page
+import 'new_page.dart'; // Import the new page
 
 void main() {
   runApp(MyApp());
@@ -32,6 +32,32 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  final List<Map<String, String>> reviews = [
+    {
+      'image': 'assets/grace.jpg', // Replace with local image asset
+      'title': 'Review: Album One',
+      'description': 'An amazing journey through sound and emotion.',
+    },
+    {
+      'image': 'assets/placeholder.jpg', // Replace with local image asset
+      'title': 'Review: Album Two',
+      'description': 'A bold, experimental record full of surprises.',
+    },
+  ];
+
+  final List<Map<String, String>> lists = [
+    {
+      'image': 'assets/placeholder.jpg', // Replace with local image asset
+      'title': 'Top 10 Albums of 2025',
+      'description': 'A curated list of the best albums released this year.',
+    },
+    {
+      'image': 'assets/placeholder.jpg', // Replace with local image asset
+      'title': 'Best Chill Albums',
+      'description': 'Albums perfect for a relaxing evening.',
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,45 +68,40 @@ class _MyHomePageState extends State<MyHomePage> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            // Custom Drawer Header with image and icon
             DrawerHeader(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/space.jpg'), // Replace with your image path
+                  image: AssetImage('assets/space.jpg'), // Local asset image
                   fit: BoxFit.cover,
                 ),
               ),
               child: GestureDetector(
                 onTap: () {
-                  // Navigate to the NewPage when the DrawerHeader is tapped
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => NewPage(initialTabIndex: 0), // Navigate with the 'Reviews' tab highlighted
+                      builder: (context) => NewPage(initialTabIndex: 0),
                     ),
                   );
                 },
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    // User icon
                     CircleAvatar(
                       radius: 30,
-                      backgroundImage: AssetImage('assets/red.jpg'), // Replace with your user icon
+                      backgroundImage: AssetImage('assets/red.jpg'), // Local asset image
                     ),
-                    SizedBox(height: 10), // Space between icon and text
-                    // Username text
+                    SizedBox(height: 10),
                     Text(
-                      'Username', // Replace with dynamic username if needed
+                      'Username',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white, // Text color
+                        color: Colors.white,
                       ),
                     ),
-                    // Additional text (email or other info)
                     Text(
-                      'user@example.com', // Replace with dynamic email if needed
+                      'user@example.com',
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.white,
@@ -90,19 +111,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
-            // Drawer Items
             ListTile(
               leading: Icon(Icons.home),
               title: Text('Profile'),
               onTap: () {
-                // Navigate to the NewPage when the DrawerHeader is tapped
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => NewPage(initialTabIndex: 0), // Navigate with the 'Reviews' tab highlighted
+                    builder: (context) => NewPage(initialTabIndex: 0),
                   ),
                 );
-              }
+              },
             ),
             ListTile(
               title: Text('Activity'),
@@ -110,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => NewPage(initialTabIndex: 1), // Navigate with the 'Reviews' tab highlighted
+                    builder: (context) => NewPage(initialTabIndex: 1),
                   ),
                 );
               },
@@ -121,7 +140,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => NewPage(initialTabIndex: 2), // Navigate with the 'Reviews' tab highlighted
+                    builder: (context) => NewPage(initialTabIndex: 2),
                   ),
                 );
               },
@@ -132,7 +151,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => NewPage(initialTabIndex: 3), // Navigate with the 'Reviews' tab highlighted
+                    builder: (context) => NewPage(initialTabIndex: 3),
                   ),
                 );
               },
@@ -140,7 +159,29 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      body: Center(
+      body: _selectedIndex == 0
+          ? DefaultTabController(
+        length: 2,
+        child: Column(
+          children: [
+            TabBar(
+              tabs: [
+                Tab(text: 'Reviews'),
+                Tab(text: 'Lists'),
+              ],
+            ),
+            Expanded(
+              child: TabBarView(
+                children: [
+                  FeedList(items: reviews),
+                  FeedList(items: lists),
+                ],
+              ),
+            ),
+          ],
+        ),
+      )
+          : Center(
         child: Text(
           'Selected Index: $_selectedIndex',
           style: TextStyle(fontSize: 24),
@@ -167,4 +208,61 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+class FeedList extends StatelessWidget {
+  final List<Map<String, String>> items;
+
+  const FeedList({Key? key, required this.items}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      padding: EdgeInsets.all(16),
+      itemCount: items.length,
+      separatorBuilder: (context, index) => SizedBox(height: 16),
+      itemBuilder: (context, index) {
+        final item = items[index];
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.asset(
+                item['image']!,
+                width: 200,
+                height: 200,
+                fit: BoxFit.cover,
+              ),
+            ),
+            SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    item['title']!,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    item['description']!,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey[700],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+
 

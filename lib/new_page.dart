@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'item.dart';
+import 'edit_profile.dart';
 class NewPage extends StatefulWidget {
   final int initialTabIndex;
 
@@ -109,6 +110,11 @@ class _NewPageState extends State<NewPage> with SingleTickerProviderStateMixin {
                   onPressed: () {
                     // Add action for "Edit Profile" button
                     print('Edit Profile Pressed!');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EditProfilePage()),
+                    );
                   },
                   child: Text('Edit Profile'),
                 ),
@@ -178,7 +184,7 @@ class _NewPageState extends State<NewPage> with SingleTickerProviderStateMixin {
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(8),
                                 child: Image.asset(
-                                  albumImages[0],
+                                  albumImages[index],
                                   width: 100,
                                   height: 100,
                                   fit: BoxFit.cover,
@@ -358,6 +364,10 @@ class AlbumDetailPage extends StatelessWidget {
     );
   }
 }
+
+
+
+
 
 
 
