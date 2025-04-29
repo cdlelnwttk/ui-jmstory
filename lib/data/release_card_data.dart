@@ -56,3 +56,22 @@ final List<Map<String, dynamic>> activities = [
     'listBy': 'You',
   },
 ];
+
+
+final List<Map<String, dynamic>> charts = [
+  {
+    'image': 'assets/grace.jpg', // Replace with local image asset
+    'title': 'Grace',
+    'artist': 'Jeff Buckley',
+    'genre': 'Rock, Alternative Rock',
+    'year': 'October 12 1996',
+    'number': 1,
+    'rating': 4,
+    'number_of_reviews': 20,
+  },
+  {
+    'image': 'assets/youdpreferanastronaut.png', // Replace with local image asset
+    'title': 'You\'d Prefer an Astronaut',
+    'number': 2,
+  },
+];

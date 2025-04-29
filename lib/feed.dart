@@ -20,6 +20,11 @@ class FeedList extends StatelessWidget {
         final listBy = item['listBy'] != null ? item['listBy'] as String : null;
         final reviewer = item['reviewer'] != null ? item['reviewer'] as String : null;
         final creator = item['creator'] != null ? item['creator'] as String : null;
+        final year = item['year'] != null ? item['year'] as String : null;
+        final number = item['number'] != null ? item['number'] as int : null;
+        final genre = item['genre'] != null ? item['genre'] as String : null;
+        final artist = item['artist'] != null ? item['artist'] as String : null;
+        final reviews = item['number_of_reviews'] != null ? item['number_of_reviews'] as int : null;
         return CustomInfoCard(
           imagePath: item['image'] ?? '',
           name: item['title'] ?? '',
@@ -30,6 +35,11 @@ class FeedList extends StatelessWidget {
           creator: creator,
           rating: rating,
           size: 150,
+          year: year,
+          number: number,
+          genre: genre,
+          artist: artist,
+          number_of_reviews: reviews,
         );
       },
     );

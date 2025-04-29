@@ -3,25 +3,34 @@ import 'package:flutter/material.dart';
 class CustomInfoCard extends StatelessWidget {
   final String imagePath;
   final String name;
-  final String description;
+  final String? description;
   final double size;
-  final String? reviewedBy; // Optional "reviewed by" text
+  final String? reviewedBy;
   final String? listBy;
-  final String? reviewer;   // Optional reviewer name
+  final String? reviewer;
   final String? creator;
   final int? rating;
-  fubak
+  final String? year;
+  final int? number;
+  final String? genre;
+  final String? artist;
+  final int? number_of_reviews;
 
   const CustomInfoCard({
     required this.imagePath,
     required this.name,
-    required this.description,
+    this.description,
     required this.size,
     this.reviewedBy,
     this.listBy,
     this.reviewer,
     this.creator,
     this.rating,
+    this.year,
+    this.number,
+    this.genre,
+    this.artist,
+    this.number_of_reviews,
     Key? key,
   }) : super(key: key);
 
@@ -45,7 +54,6 @@ class CustomInfoCard extends StatelessWidget {
                 ),
               ),
             ),
-          // "Reviewed By" or custom text at the top
           if (reviewedBy != null)
             Padding(
               padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
@@ -70,11 +78,11 @@ class CustomInfoCard extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
               SizedBox(width: 15),
+              // Main content in center
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Title
                     Text(
                       name,
                       style: TextStyle(
@@ -82,8 +90,33 @@ class CustomInfoCard extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 8),
-                    // Reviewer field (if provided)
+                    SizedBox(height: 4),
+                    if (artist != null)
+                      Text(
+                        '$artist',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    if (year != null)
+                      Text(
+                        '$year',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                        ),
+                      ),
+                    if (genre != null)
+                      Text(
+                        '$genre',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
                     if (creator != null)
                       Text(
                         'creator: $creator',
@@ -102,7 +135,6 @@ class CustomInfoCard extends StatelessWidget {
                           color: Colors.black,
                         ),
                       ),
-                    // Stars (if rating is provided)
                     if (rating != null)
                       Padding(
                         padding: const EdgeInsets.only(top: 4.0),
@@ -118,18 +150,41 @@ class CustomInfoCard extends StatelessWidget {
                           }),
                         ),
                       ),
-                    SizedBox(height: 8),
-                    // Description
-                    Text(
-                      description,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey,
+                    if (number_of_reviews
+                        != null)
+                      Text(
+                        '$number_of_reviews reviews',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontStyle: FontStyle.italic,
+                          color: Colors.black,
+                        ),
                       ),
-                    ),
+                    SizedBox(height: 8),
+                    if (description != null)
+                      Text(
+                        '$description',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontStyle: FontStyle.italic,
+                          color: Colors.grey,
+                        ),
+                      ),
                   ],
                 ),
               ),
+              // Number on the right
+              if (number != null)
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text(
+                    '$number',
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
             ],
           ),
         ],
