@@ -4,6 +4,8 @@ import 'album_widget.dart';
 import 'package:untitled3/data/release_card_data.dart';
 import 'bottom_nav.dart';
 import 'feed.dart';
+import 'charts.dart';
+import 'search.dart';
 void main() {
   runApp(MyApp());
 }
@@ -41,7 +43,37 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       );
     }
+    if (index == 3) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ChartsPage(),  // Navigate to ProfilePage
+        ),
+      );
+    }
+    if (index == 1){
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => SearchPage()),
+      );
+
+    }
+    if (index == 0){
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => MyHomePage()),
+      );
+
+    }
+    if (index == 2){
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => MyHomePage()),
+      );
+
+    }
   }
+
 
   @override
   Widget build(BuildContext context) {

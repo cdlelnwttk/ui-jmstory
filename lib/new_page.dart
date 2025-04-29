@@ -5,7 +5,7 @@ import 'package:untitled3/data/release_card_data.dart';
 import 'bottom_nav.dart';
 import 'main.dart';
 import 'feed.dart';
-
+import 'nav_logic.dart';
 class NewPage extends StatefulWidget {
   final int initialTabIndex;
 
@@ -52,11 +52,11 @@ class _NewPageState extends State<NewPage> with SingleTickerProviderStateMixin {
     }
   }
 
-  void _navigateToAlbumDetail(String albumImage) {
+  void _navigateToAlbumDetail(String albumImage, ) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => AlbumDetailPage(imagePath: albumImage),
+        builder: (context) => AlbumDetailPage(imagePath: albumImage, ),
       ),
     );
   }
@@ -223,7 +223,12 @@ class _NewPageState extends State<NewPage> with SingleTickerProviderStateMixin {
       ),
       bottomNavigationBar: CustomBottomNavBar(
         currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+          handleNavTap(context, index); // use shared nav logic
+        },
       ),
     );
   }

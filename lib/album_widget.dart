@@ -9,7 +9,7 @@ class CustomInfoCard extends StatelessWidget {
   final String? listBy;
   final String? reviewer;   // Optional reviewer name
   final String? creator;
-  final int? rating;        // Optional star rating (0–5)
+  final int? rating;
 
   const CustomInfoCard({
     required this.imagePath,
