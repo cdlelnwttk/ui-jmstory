@@ -10,6 +10,7 @@ class CustomInfoCard extends StatelessWidget {
   final String? reviewer;   // Optional reviewer name
   final String? creator;
   final int? rating;
+  fubak
 
   const CustomInfoCard({
     required this.imagePath,
