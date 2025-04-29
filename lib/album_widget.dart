@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'detail_page.dart';
 
 class CustomInfoCard extends StatelessWidget {
   final String imagePath;
@@ -15,6 +16,11 @@ class CustomInfoCard extends StatelessWidget {
   final String? genre;
   final String? artist;
   final int? number_of_reviews;
+  final int review;
+  final int list;
+  final int activity;
+  final int detail;
+  final int charts;
 
   const CustomInfoCard({
     required this.imagePath,
@@ -31,6 +37,11 @@ class CustomInfoCard extends StatelessWidget {
     this.genre,
     this.artist,
     this.number_of_reviews,
+    required this.review,
+    required this.activity,
+    required this.detail,
+    required this.list,
+    required this.charts,
     Key? key,
   }) : super(key: key);
 
@@ -41,41 +52,66 @@ class CustomInfoCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (listBy != null)
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
-              child: Text(
-                '$listBy created...',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic,
-                  color: Colors.black,
+          if (activity == 1 && review == 1)
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
+                child: Text(
+                  '$reviewedBy reviewed...',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                    color: Colors.black,
+                  ),
                 ),
               ),
-            ),
-          if (reviewedBy != null)
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
-              child: Text(
-                '$reviewedBy reviewed...',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic,
-                  color: Colors.black,
+          if (activity == 1 && list == 1)
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
+                child: Text(
+                  '$listBy created...',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                    color: Colors.black,
+                  ),
                 ),
               ),
-            ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Image on the left
-              Image.asset(
-                imagePath,
-                width: size,
-                height: size,
-                fit: BoxFit.cover,
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => DetailPage(
+                        imagePath: imagePath,
+                        name: name,
+                        description: description,
+                        size: size,
+                        reviewedBy: reviewedBy,
+                        listBy: listBy,
+                        reviewer: reviewer,
+                        creator: creator,
+                        rating: rating,
+                        year: year,
+                        number: number,
+                        genre: genre,
+                        artist: artist,
+                        number_of_reviews: number_of_reviews,
+                      ),
+                    ),
+                  );
+                },
+                child: Image.asset(
+                  imagePath,
+                  width: size,
+                  height: size,
+                  fit: BoxFit.cover,
+                ),
               ),
               SizedBox(width: 15),
               // Main content in center
@@ -83,15 +119,40 @@ class CustomInfoCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      name,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => DetailPage(
+                              imagePath: imagePath,
+                              name: name,
+                              description: description,
+                              size: size,
+                              reviewedBy: reviewedBy,
+                              listBy: listBy,
+                              reviewer: reviewer,
+                              creator: creator,
+                              rating: rating,
+                              year: year,
+                              number: number,
+                              genre: genre,
+                              artist: artist,
+                              number_of_reviews: number_of_reviews,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        name,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                     SizedBox(height: 4),
-                    if (artist != null)
+                    if (detail == 1)
                       Text(
                         '$artist',
                         style: TextStyle(
@@ -100,7 +161,7 @@ class CustomInfoCard extends StatelessWidget {
                           color: Colors.black,
                         ),
                       ),
-                    if (year != null)
+                    if (detail == 1)
                       Text(
                         '$year',
                         style: TextStyle(
@@ -108,16 +169,16 @@ class CustomInfoCard extends StatelessWidget {
                           color: Colors.black,
                         ),
                       ),
-                    if (genre != null)
+                    if (detail == 1)
                       Text(
                         '$genre',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
+                         style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
                       ),
-                    if (creator != null)
+                    if (list == 1)
                       Text(
                         'creator: $creator',
                         style: TextStyle(
@@ -126,7 +187,7 @@ class CustomInfoCard extends StatelessWidget {
                           color: Colors.black,
                         ),
                       ),
-                    if (reviewer != null)
+                    if (review == 1)
                       Text(
                         'Reviewer: $reviewer',
                         style: TextStyle(
@@ -135,7 +196,7 @@ class CustomInfoCard extends StatelessWidget {
                           color: Colors.black,
                         ),
                       ),
-                    if (rating != null)
+                    if (list == 0)
                       Padding(
                         padding: const EdgeInsets.only(top: 4.0),
                         child: Row(
@@ -150,8 +211,7 @@ class CustomInfoCard extends StatelessWidget {
                           }),
                         ),
                       ),
-                    if (number_of_reviews
-                        != null)
+                    if (detail == 1)
                       Text(
                         '$number_of_reviews reviews',
                         style: TextStyle(
@@ -160,8 +220,7 @@ class CustomInfoCard extends StatelessWidget {
                           color: Colors.black,
                         ),
                       ),
-                    SizedBox(height: 8),
-                    if (description != null)
+                    if (detail == 0)
                       Text(
                         '$description',
                         style: TextStyle(
@@ -174,7 +233,7 @@ class CustomInfoCard extends StatelessWidget {
                 ),
               ),
               // Number on the right
-              if (number != null)
+              if (charts == 1)
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
                   child: Text(

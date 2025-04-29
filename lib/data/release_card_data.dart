@@ -2,30 +2,77 @@ final List<Map<String, dynamic>> reviews = [
   {
     'image': 'assets/grace.jpg', // Replace with local image asset
     'title': 'Grace',
-    'description': 'Why is not adding',
+    'description': 'This is a text field',
     'reviewer' : 'username',
+    'reviewedBy' : 'username',
+    'creator' : 'username',
+    'createdBy' : 'username',
+    'year' : 'October 12 1994',
+    'number' : 1,
+    'genre' : 'Rock',
+    'artist' : 'Jeff Buckley',
+    'number_of_reviews' : 20,
     'rating': 5,
   },
   {
     'image': 'assets/youdpreferanastronaut.png', // Replace with local image asset
     'title': 'You\'d Prefer an Astronaut',
-    'description': 'A bold, experimental record full of surprises.',
+    'description': 'This is a text field',
+    'reviewer' : 'username',
+    'reviewedBy' : 'username',
+    'creator' : 'username',
+    'createdBy' : 'username',
+    'year' : 'October 12 1994',
+    'number' : 2,
+    'genre' : 'Rock',
+    'artist' : 'Hum',
+    'number_of_reviews' : 20,
+    'rating': 5,
   },
   {
     'image': 'assets/goo.jpg', // Replace with local image asset
     'title': 'Goo',
-    'description': 'A bold, experimental record full of surprises.',
+    'description': 'This is a text field',
+    'reviewer' : 'username',
+    'reviewedBy' : 'username',
+    'creator' : 'username',
+    'createdBy' : 'username',
+    'year' : 'October 12 1994',
+    'number' : 3,
+    'genre' : 'Rock',
+    'artist' : 'Sonic Youth',
+    'number_of_reviews' : 20,
+    'rating': 5,
   },
   {
     'image': 'assets/withoutasound.jpg', // Replace with local image asset
     'title': 'Goo',
-    'description': 'A bold, experimental record full of surprises.',
+    'description': 'This is a text field',
+    'reviewer' : 'username',
+    'reviewedBy' : 'username',
+    'creator' : 'username',
+    'createdBy' : 'username',
+    'year' : 'October 12 1994',
+    'number' : 4,
+    'genre' : 'Rock',
+    'artist' : 'Dinosaur Jr.',
+    'number_of_reviews' : 20,
     'rating': 5,
   },
   {
     'image': 'assets/mellon.jpg', // Replace with local image asset
-    'title': 'Goo',
-    'description': 'A bold, experimental record full of surprises.',
+    'title': 'Mellon Collie and the Infinite Sadness',
+    'description': 'This is a text field',
+    'reviewer' : 'username',
+    'reviewedBy' : 'username',
+    'creator' : 'username',
+    'createdBy' : 'username',
+    'year' : 'October 12 1994',
+    'number' : 5,
+    'genre' : 'Rock',
+    'artist' : 'The Smashing Pumpkins',
+    'number_of_reviews' : 20,
+    'rating': 5,
   },
 ];
 
@@ -73,5 +120,14 @@ final List<Map<String, dynamic>> charts = [
     'image': 'assets/youdpreferanastronaut.png', // Replace with local image asset
     'title': 'You\'d Prefer an Astronaut',
     'number': 2,
+  },
+];
+
+final List<Map<String, dynamic>> friends = [
+  {
+    'image': 'assets/red.jpg', // Replace with local image asset
+    'title': 'This is a friend',
+    'description': 'username',
+    'size': 50.0
   },
 ];

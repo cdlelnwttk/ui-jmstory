@@ -196,10 +196,10 @@ class _MyHomePageState extends State<MyHomePage> {
             Expanded(
               child: TabBarView(
                 children: [
-                  FeedList(items: reviews),
-                  FeedList(items: lists),
-                  FeedList(items: reviews),
-                  FeedList(items: lists)
+                  FeedList(items: reviews, a: 1, b: 0, c: 0, d: 0, f: 0),
+                  FeedList(items: reviews, a: 0, b: 0, c: 1, d: 0, f: 0),
+                  FeedList(items: reviews, a: 1, b: 0, c: 0, d: 0, f: 0),
+                  FeedList(items: reviews, a: 0, b: 1, c: 0, d: 0, f: 0),
                 ],
               ),
             ),

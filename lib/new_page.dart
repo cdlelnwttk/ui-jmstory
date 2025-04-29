@@ -29,7 +29,7 @@ class _NewPageState extends State<NewPage> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this, initialIndex: widget.initialTabIndex);
+    _tabController = TabController(length: 5, vsync: this, initialIndex: widget.initialTabIndex);
   }
 
   @override
@@ -212,10 +212,10 @@ class _NewPageState extends State<NewPage> with SingleTickerProviderStateMixin {
                   ),
                 )
 ,
-                FeedList(items: activities),
-                FeedList(items: reviews),
-                FeedList(items: lists),
-                Center(child: Text('Friends will go here')),
+                FeedList(items: reviews, a: 1, b: 1, c: 0, d: 0, f: 0),
+                FeedList(items: reviews, a: 1, b: 0, c: 0, d: 0, f: 0),
+                FeedList(items: reviews, a: 0, b: 0, c: 1, d: 0, f: 0),
+                FeedList(items: friends, a: 0, b: 0, c: 0, d: 0, f: 0),
               ],
             ),
           ),

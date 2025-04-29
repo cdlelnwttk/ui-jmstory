@@ -3,8 +3,21 @@ import 'album_widget.dart';
 
 class FeedList extends StatelessWidget {
   final List<Map<String, dynamic>> items;
+  final int a;
+  final int b;
+  final int c;
+  final int d;
+  final int f;
 
-  const FeedList({Key? key, required this.items}) : super(key: key);
+  const FeedList({
+    Key? key,
+    required this.items,
+    required this.a,
+    required this.b,
+    required this.c,
+    required this.d,
+    required this.f,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +38,7 @@ class FeedList extends StatelessWidget {
         final genre = item['genre'] != null ? item['genre'] as String : null;
         final artist = item['artist'] != null ? item['artist'] as String : null;
         final reviews = item['number_of_reviews'] != null ? item['number_of_reviews'] as int : null;
+        final size = item['size'] != null ? item['size'] as double : 150.0;
         return CustomInfoCard(
           imagePath: item['image'] ?? '',
           name: item['title'] ?? '',
@@ -34,12 +48,17 @@ class FeedList extends StatelessWidget {
           reviewer: reviewer,
           creator: creator,
           rating: rating,
-          size: 150,
+          size: size,
           year: year,
           number: number,
           genre: genre,
           artist: artist,
           number_of_reviews: reviews,
+          review : a,
+          activity: b,
+          list: c,
+          detail: d,
+          charts: f,
         );
       },
     );
