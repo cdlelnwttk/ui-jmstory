@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:untitled3/home.dart';
 import 'edit_profile.dart';
 import 'album_widget.dart';
 import 'package:untitled3/data/release_card_data.dart';
 import 'bottom_nav.dart';
-import 'home.dart';
 import 'main.dart';
 import 'feed.dart';
 
