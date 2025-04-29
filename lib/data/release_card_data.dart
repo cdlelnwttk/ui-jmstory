@@ -41,3 +41,18 @@ final List<Map<String, String>> lists = [
     'description': 'Albums perfect for a relaxing evening.',
   },
 ];
+
+final List<Map<String, dynamic>> activities = [
+  {
+    'image': 'assets/grace.jpg', // Replace with local image asset
+    'title': 'Grace',
+    'description': 'A curated list of the best albums released this year.',
+    'reviewedBy': 'You',
+  },
+  {
+    'image': 'assets/grace.jpg', // Replace with local image asset
+    'title': 'Grace',
+    'description': 'Updated.',
+    'listBy': 'You',
+  },
+];

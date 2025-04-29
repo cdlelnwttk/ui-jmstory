@@ -7,10 +7,10 @@ import 'bottom_nav.dart';
 import 'home.dart';
 import 'main.dart';
 import 'feed.dart';
+
 class NewPage extends StatefulWidget {
   final int initialTabIndex;
 
-  // Constructor to accept initialTabIndex as an argument
   NewPage({Key? key, required this.initialTabIndex}) : super(key: key);
 
   @override
@@ -23,15 +23,14 @@ class _NewPageState extends State<NewPage> with SingleTickerProviderStateMixin {
 
   final List<String> albumImages = [
     'assets/grace.jpg',
-    'assets/album1.jpg',
-    'assets/album2.jpg',
-    'assets/album3.jpg',
+    'assets/goo.jpg',
+    'assets/mellon.jpg',
+    'assets/youdpreferanastronaut.png',
   ];
 
   @override
   void initState() {
     super.initState();
-    // Set the initial tab index from the widget's argument
     _tabController = TabController(length: 4, vsync: this, initialIndex: widget.initialTabIndex);
   }
 
@@ -45,11 +44,11 @@ class _NewPageState extends State<NewPage> with SingleTickerProviderStateMixin {
     setState(() {
       _selectedIndex = index;
     });
-    if (index == 1) {  // Profile tab is at index 4
+    if (index == 0) {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => MyHomePage(),  // Navigate to ProfilePage
+          builder: (context) => MyHomePage(),
         ),
       );
     }
@@ -85,7 +84,7 @@ class _NewPageState extends State<NewPage> with SingleTickerProviderStateMixin {
                   left: 20,
                   bottom: 10,
                   child: CircleAvatar(
-                    radius: 30,
+                    radius: 40,
                     backgroundImage: AssetImage('assets/red.jpg'),
                   ),
                 ),
@@ -117,15 +116,12 @@ class _NewPageState extends State<NewPage> with SingleTickerProviderStateMixin {
                     ),
                   ],
                 ),
-                Spacer(),  // Pushes the button to the far right
+                Spacer(),
                 ElevatedButton(
                   onPressed: () {
-                    // Add action for "Edit Profile" button
-                    print('Edit Profile Pressed!');
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => EditProfilePage()),
+                      MaterialPageRoute(builder: (context) => EditProfilePage()),
                     );
                   },
                   child: Text('Edit Profile'),
@@ -134,120 +130,94 @@ class _NewPageState extends State<NewPage> with SingleTickerProviderStateMixin {
             ),
           ),
           TabBar(
+            isScrollable: true,
             controller: _tabController,
             tabs: [
               Tab(text: 'Favorites'),
               Tab(text: 'Activity'),
               Tab(text: 'Reviews'),
               Tab(text: 'Lists'),
+              Tab(text: 'Friends')
             ],
           ),
           Expanded(
             child: TabBarView(
               controller: _tabController,
               children: [
-                // Favorites Tab
                 SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Text(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
                           'Favorite Singles',
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      GridView.count(
-                        crossAxisCount: 2, // 2 items per row
-                        shrinkWrap: true, // Allows GridView to take the height of its children
-                        physics: NeverScrollableScrollPhysics(), // Disables scroll for GridView
-                        padding: EdgeInsets.all(8),
-                        children: List.generate(10, (index) {
-                          return Card(
-                            elevation: 5,
-                            margin: EdgeInsets.all(8),
-                            child: InkWell(
-                              onTap: () => _navigateToAlbumDetail('Album $index'),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: Image.asset(
-                                  'assets/album_image.jpg', // Replace with actual album image path
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                          );
-                        }),
-                      ),
-                    ],
-                  ),
-                ),
-                // Activity Tab
-                SingleChildScrollView(
-                  child: Column(
-                    children: List.generate(albumImages.length, (index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: InkWell(
-                          onTap: () => _navigateToAlbumDetail(albumImages[index]),
-                          child: Row(
-                            children: <Widget>[
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: Image.asset(
-                                  albumImages[index],
-                                  width: 100,
-                                  height: 100,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              SizedBox(width: 16),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Album Title $index',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    SizedBox(height: 8),
-                                    Text(
-                                      'This is a short review you wrote about the album.',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.black54,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      );
-                    }),
+                        SizedBox(height: 10),
+                        GridView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: 4, // 2x2 = 4 items
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 10,
+                          ),
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                _navigateToAlbumDetail(albumImages[index % albumImages.length]);
+                              },
+                              child: Image.asset(
+                                albumImages[index % albumImages.length],
+                                fit: BoxFit.cover,
+                              ),
+                            );
+                          },
+                        ),
+                        SizedBox(height: 20),
+                        Text(
+                          'Favorite Albums',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        GridView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: 4, // 2x2 = 4 items
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 10,
+                          ),
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                _navigateToAlbumDetail(albumImages[(index) % albumImages.length]);
+                              },
+                              child: Image.asset(
+                                albumImages[index % albumImages.length],
+                                fit: BoxFit.cover,
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                // Reviews Tab
-                SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      FeedList(items: reviews),  // FeedList widget that uses items to display the reviews
-                    ],
-                  ),
-                ),
-                // Lists Tab
-                SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      FeedList(items: lists),  // FeedList widget that uses items to display the reviews
-                    ],
-                  ),
-                ),
+                )
+,
+                FeedList(items: activities),
+                FeedList(items: reviews),
+                FeedList(items: lists),
+                Center(child: Text('Friends will go here')),
               ],
             ),
           ),
@@ -261,7 +231,6 @@ class _NewPageState extends State<NewPage> with SingleTickerProviderStateMixin {
   }
 }
 
-// The new page when you click an album
 class AlbumDetailPage extends StatelessWidget {
   final String imagePath;
 
@@ -280,6 +249,7 @@ class AlbumDetailPage extends StatelessWidget {
     );
   }
 }
+
 
 
 

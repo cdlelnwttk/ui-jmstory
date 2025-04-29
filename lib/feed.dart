@@ -24,13 +24,12 @@ class FeedList extends StatelessWidget {
           imagePath: item['image'] ?? '',
           name: item['title'] ?? '',
           description: item['description'] ?? '',
-          size: 150, // You can adjust the size here
           reviewedBy: reviewedBy,
           listBy: listBy,
           reviewer: reviewer,
           creator: creator,
           rating: rating,
-
+          size: 150,
         );
       },
     );

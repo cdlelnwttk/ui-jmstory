@@ -18,6 +18,20 @@ class EditProfilePage extends StatefulWidget {
   _EditProfilePageState createState() => _EditProfilePageState();
 }
 
+final List<String> albumImages = [
+  'assets/grace.jpg',
+  'assets/goo.jpg',
+  'assets/mellon.jpg',
+  'assets/youdpreferanastronaut.png',
+];
+
+final List<String> singleImages = [
+  'assets/single1.jpg', // Replace with your own images
+  'assets/single2.jpg',
+  'assets/single3.jpg',
+  'assets/single4.jpg',
+];
+
 class _EditProfilePageState extends State<EditProfilePage> {
   TextEditingController _displayNameController = TextEditingController();
   TextEditingController _bioController = TextEditingController();
@@ -50,49 +64,27 @@ class _EditProfilePageState extends State<EditProfilePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Cover Image
-              GestureDetector(
-                onTap: () {
-                  print('Change cover image');
-                },
-                child: Stack(
-                  children: [
-                    Container(
-                      height: 200,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage('https://via.placeholder.com/800x200'),
-                          fit: BoxFit.cover,
-                        ),
+              // Cover Image with Circular Profile on top
+              Stack(
+                children: [
+                  Container(
+                    height: 200,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/space.jpg'),
+                        fit: BoxFit.cover,
                       ),
                     ),
-                    Positioned(
-                      top: 10,
-                      right: 10,
-                      child: Icon(
-                        Icons.edit,
-                        color: Colors.white,
-                        size: 30,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20),
-
-              // Profile Picture
-              GestureDetector(
-                onTap: () {
-                  print('Change profile picture');
-                },
-                child: CircleAvatar(
-                  radius: 50,
-                  backgroundImage: NetworkImage('https://via.placeholder.com/150'),
-                  child: Icon(
-                    Icons.edit,
-                    color: Colors.white,
                   ),
-                ),
+                  Positioned(
+                    top: 115, // Adjust this value to control vertical positioning
+                    left: 16, // Adjust this value for horizontal positioning
+                    child: CircleAvatar(
+                      radius: 40,
+                      backgroundImage: AssetImage('assets/red.jpg'),
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 20),
 
@@ -100,39 +92,82 @@ class _EditProfilePageState extends State<EditProfilePage> {
               TextField(
                 controller: _displayNameController,
                 decoration: InputDecoration(
-                  labelText: 'Display Name',
+                  labelText: 'New Display Name',
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(Icons.person),
                 ),
               ),
               SizedBox(height: 20),
 
-              // Bio
-              TextField(
-                controller: _bioController,
-                maxLines: 4,
-                decoration: InputDecoration(
-                  labelText: 'Bio',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.info),
-                ),
-              ),
-              SizedBox(height: 20),
-
-              // Favorite Films Section
+              // Favorite Albums Section
               Text(
-                'Favorite Films',
+                'Favorite Singles',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 10),
-              // Wrap to create two rows of images
-              Wrap(
-                spacing: 10, // Horizontal spacing between images
-                runSpacing: 10, // Vertical spacing between rows
-                children: List.generate(4, (index) {
-                  return HoverableImage(
-                    imageUrl: 'assets/grace.jpg',
-                    label: 'Edit',
+              // Wrap to create two rows of images for albums
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: List.generate(2, (index) {
+                  return Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                      child: ImageWidget(
+                        imageUrl: albumImages[index],
+                      ),
+                    ),
+                  );
+                }),
+              ),
+              SizedBox(height: 20),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: List.generate(2, (index) {
+                  return Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                      child: ImageWidget(
+                        imageUrl: albumImages[index + 2],
+                      ),
+                    ),
+                  );
+                }),
+              ),
+              SizedBox(height: 20),
+
+              // Favorite Singles Section
+              Text(
+                'Favorite Albums',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10),
+              // Wrap to create two rows of images for singles
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: List.generate(2, (index) {
+                  return Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                      child: ImageWidget(
+                        imageUrl: albumImages[index],
+                      ),
+                    ),
+                  );
+                }),
+              ),
+              SizedBox(height: 20),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: List.generate(2, (index) {
+                  return Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                      child: ImageWidget(
+                        imageUrl: albumImages[index + 2],
+                      ),
+                    ),
                   );
                 }),
               ),
@@ -144,46 +179,24 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 }
 
-class HoverableImage extends StatefulWidget {
+class ImageWidget extends StatelessWidget {
   final String imageUrl;
-  final String label;
 
-  const HoverableImage({
+  const ImageWidget({
     Key? key,
     required this.imageUrl,
-    required this.label,
   }) : super(key: key);
 
   @override
-  _HoverableImageState createState() => _HoverableImageState();
-}
-
-class _HoverableImageState extends State<HoverableImage> {
-  bool _isHovered = false;
-
-  @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (_) => setState(() {
-        _isHovered = true;
-      }),
-      onExit: (_) => setState(() {
-        _isHovered = false;
-      }),
-      child: Column(
-        children: [
-          Image.network(
-            widget.imageUrl,
-            width: 100,
-            height: 100,
-          ),
-          if (_isHovered)
-            Text(
-              widget.label,
-              style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
-            ),
-        ],
-      ),
+    return Image.asset(
+      imageUrl,
+      width: 100,
+      height: 100,
+      fit: BoxFit.cover,
     );
   }
 }
+
+
+

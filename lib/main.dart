@@ -149,7 +149,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: _selectedIndex == 0
           ? DefaultTabController(
-        length: 2,
+        length: 4,
         child: Column(
           children: [
             TabBar(
@@ -166,6 +166,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   FeedList(items: reviews),
                   FeedList(items: lists),
+                  FeedList(items: reviews),
+                  FeedList(items: lists)
                 ],
               ),
             ),

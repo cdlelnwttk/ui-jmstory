@@ -35,7 +35,7 @@ class CustomInfoCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
               child: Text(
-                '$reviewedBy reviewed...',
+                '$listBy created...',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -85,7 +85,7 @@ class CustomInfoCard extends StatelessWidget {
                     // Reviewer field (if provided)
                     if (creator != null)
                       Text(
-                        'Reviewer: $reviewer',
+                        'creator: $creator',
                         style: TextStyle(
                           fontSize: 14,
                           fontStyle: FontStyle.italic,
