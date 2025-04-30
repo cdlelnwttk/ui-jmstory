@@ -6,6 +6,9 @@ import 'bottom_nav.dart';
 import 'feed.dart';
 import 'charts.dart';
 import 'search.dart';
+import 'review_widget.dart'; // Import the file containing CustomRowWidget
+import 'user_feed.dart';
+import 'package:untitled3/data/user_info_data.dart';
 void main() {
   runApp(MyApp());
 }

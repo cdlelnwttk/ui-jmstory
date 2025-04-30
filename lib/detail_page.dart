@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'review_widget.dart'; // Import the file containing CustomRowWidget
+import 'review_widget.dart'; // Contains CustomRowWidget
+import 'user_feed.dart'; // Contains FeedPage
+import 'package:untitled3/data/user_info_data.dart'; // Your users list
 
 class DetailPage extends StatelessWidget {
   final String imagePath;
@@ -38,54 +40,45 @@ class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            pinned: true,
-            expandedHeight: 60.0,
-            backgroundColor: Theme.of(context).primaryColor,
-            title: Text(name),
-          ),
-          // Name and Artist
-          SliverToBoxAdapter(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                // Name (flush under app bar)
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: 8.0, left: 16.0, right: 16.0),
-                  child: Text(
-                    name,
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
+      appBar: AppBar(
+        title: Text(name),
+        backgroundColor: Theme.of(context).primaryColor,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Name
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
+              child: Text(
+                name,
+                style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
                 ),
-                // "by <artist>" if artist is not null
-                if (artist != null)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 4.0, bottom: 8.0),
-                    child: Text(
-                      "by $artist",
-                      style: TextStyle(
-                          fontSize: 18, fontStyle: FontStyle.italic),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-              ],
+                textAlign: TextAlign.center,
+              ),
             ),
-          ),
-          // Image
-          SliverToBoxAdapter(
-            child: Padding(
+
+            // Artist
+            if (artist != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 4.0, bottom: 8.0),
+                child: Text(
+                  "by $artist",
+                  style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+
+            // Image
+            Padding(
               padding: const EdgeInsets.all(16.0),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: SizedBox(
-                  height: 350, // You can adjust this value to make it smaller/larger
+                  height: 350,
                   child: Image.asset(
                     imagePath,
                     width: double.infinity,
@@ -94,36 +87,22 @@ class DetailPage extends StatelessWidget {
                 ),
               ),
             ),
-          ),
 
-          // Info Section
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
+            // Info Section
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Release Type: Album",
-                    style: TextStyle(fontSize: 20),
-                  ),
+                  Text("Release Type: Album", style: TextStyle(fontSize: 20)),
                   if (year != null)
-                    Text(
-                      "Release Date: $year",
-                      style: TextStyle(fontSize: 20),
-                    ),
+                    Text("Release Date: $year", style: TextStyle(fontSize: 20)),
                   if (genre != null)
-                    Text(
-                      "Genres: $genre",
-                      style: TextStyle(fontSize: 20),
-                    ),
+                    Text("Genres: $genre", style: TextStyle(fontSize: 20)),
                   if (rating != null)
                     Row(
                       children: [
-                        Text(
-                          "Rating: ",
-                          style: TextStyle(fontSize: 20),
-                        ),
+                        Text("Rating: ", style: TextStyle(fontSize: 20)),
                         ...List.generate(5, (index) {
                           return Icon(
                             index < rating! ? Icons.star : Icons.star_border,
@@ -133,32 +112,24 @@ class DetailPage extends StatelessWidget {
                         }),
                       ],
                     ),
+                  SizedBox(height: 10),
                   if (number_of_reviews != null)
-                    Text(
-                      "$number_of_reviews Reviews",
-                      style: TextStyle(fontSize: 20),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Text("$number_of_reviews Reviews", style: TextStyle(fontSize: 20)),
                     ),
                 ],
               ),
             ),
-          ),
-
-          // Add CustomRowWidget here after "20 reviews"
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: CustomRowWidget(
-                imagePath: 'assets/red.jpg', // Adjust image path as needed
-                textBoxContent: 'username',
-                rating: 4, // Adjust rating as needed
-                bottomText: 'Start of the review',
-                imageHeight: 50,
-                imageWidth: 50,
-             ),
+            SizedBox(
+              height: 400, // or whatever fits your design
+              child: FeedPage(users: users),
             ),
-          ),
-        ],
+            // Feed Section
+          ],
+        ),
       ),
     );
   }
 }
+

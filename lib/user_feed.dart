@@ -9,24 +9,21 @@ class FeedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: users.map<Widget>((user) {
-        return SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: CustomRowWidget(
-              imagePath: user['imagePath'] ?? '', // Adjust image path as needed
-              textBoxContent: user['textBoxContent'] ?? 'username',
-              rating: user['rating'] ?? 0, // Adjust rating as needed
-              bottomText: user['bottomText'] ?? 'Start of the review',
-              imageHeight: 50,
-              imageWidth: 50,
-            ),
-          ),
+    return ListView.builder(
+      padding: EdgeInsets.all(16),
+      itemCount: users.length,
+      itemBuilder: (context, index) {
+        final item = users[index];
+        return CustomRowWidget(
+          imagePath: item['imagePath'] ?? '',
+          textBoxContent: item['textBoxContent'],
+          rating: item['rating'],
+          bottomText: item['bottomText'],
+          imageHeight: item['imageHeight'],
+          imageWidth: item['imageWidth'],
         );
-      }).toList(),
+      },
     );
   }
 }
-
 
