@@ -1,47 +1,53 @@
 import 'package:flutter/material.dart';
 import 'detail_page.dart';
+import 'list_page.dart';
+import 'extended_review.dart';
 
 class CustomInfoCard extends StatelessWidget {
   final String imagePath;
   final String name;
-  final String? description;
+  final String description;
   final double size;
-  final String? reviewedBy;
-  final String? listBy;
-  final String? reviewer;
-  final String? creator;
-  final int? rating;
-  final String? year;
-  final int? number;
-  final String? genre;
-  final String? artist;
-  final int? number_of_reviews;
+  final String reviewedBy;
+  final String listBy;
+  final String reviewer;
+  final String creator;
+  final int rating;
+  final String year;
+  final int number;
+  final String genre;
+  final String artist;
+  final int number_of_reviews;
   final int review;
   final int list;
   final int activity;
   final int detail;
   final int charts;
+  final int outside;
+  final String imageCreator;
 
   const CustomInfoCard({
     required this.imagePath,
     required this.name,
-    this.description,
+    required this.description,
     required this.size,
-    this.reviewedBy,
-    this.listBy,
-    this.reviewer,
-    this.creator,
-    this.rating,
-    this.year,
-    this.number,
-    this.genre,
-    this.artist,
-    this.number_of_reviews,
+    required this.reviewedBy,
+    required this.listBy,
+    required this.reviewer,
+    required this.creator,
+    required this.rating,
+    required this.year,
+    required this.number,
+    required this.genre,
+    required this.artist,
+    required this.number_of_reviews,
     required this.review,
     required this.activity,
     required this.detail,
     required this.list,
     required this.charts,
+    required this.outside,
+    required this.imageCreator,
     Key? key,
   }) : super(key: key);
 
@@ -84,27 +90,52 @@ class CustomInfoCard extends StatelessWidget {
               // Image on the left
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => DetailPage(
-                        imagePath: imagePath,
-                        name: name,
-                        description: description,
-                        size: size,
-                        reviewedBy: reviewedBy,
-                        listBy: listBy,
-                        reviewer: reviewer,
-                        creator: creator,
-                        rating: rating,
-                        year: year,
-                        number: number,
-                        genre: genre,
-                        artist: artist,
-                        number_of_reviews: number_of_reviews,
+                  if (list == 1 && outside == 0) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => ListPage(
+                          imagePath: imagePath,
+                          name: name,
+                          description: description,
+                          size: size,
+                          reviewedBy: reviewedBy,
+                          listBy: listBy,
+                          reviewer: reviewer,
+                          creator: creator,
+                          rating: rating,
+                          year: year,
+                          number: number,
+                          genre: genre,
+                          artist: artist,
+                          number_of_reviews: number_of_reviews,
+                          // pass the required arguments here
+                        ),
                       ),
-                    ),
-                  );
+                    );
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => DetailPage(
+                          imagePath: imagePath,
+                          name: name,
+                          description: description,
+                          size: size,
+                          reviewedBy: reviewedBy,
+                          listBy: listBy,
+                          reviewer: reviewer,
+                          creator: creator,
+                          rating: rating,
+                          year: year,
+                          number: number,
+                          genre: genre,
+                          artist: artist,
+                          number_of_reviews: number_of_reviews,
+                        ),
+                      ),
+                    );
+                  }
                 },
                 child: Image.asset(
                   imagePath,
@@ -120,29 +151,7 @@ class CustomInfoCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => DetailPage(
-                              imagePath: imagePath,
-                              name: name,
-                              description: description,
-                              size: size,
-                              reviewedBy: reviewedBy,
-                              listBy: listBy,
-                              reviewer: reviewer,
-                              creator: creator,
-                              rating: rating,
-                              year: year,
-                              number: number,
-                              genre: genre,
-                              artist: artist,
-                              number_of_reviews: number_of_reviews,
-                            ),
-                          ),
-                        );
-                      },
+
                       child: Text(
                         name,
                         style: TextStyle(
@@ -178,7 +187,7 @@ class CustomInfoCard extends StatelessWidget {
                             color: Colors.black,
                           ),
                       ),
-                    if (list == 1)
+                    if (list == 1 && outside == 0)
                       Text(
                         'creator: $creator',
                         style: TextStyle(
@@ -211,7 +220,7 @@ class CustomInfoCard extends StatelessWidget {
                           }),
                         ),
                       ),
-                    if (detail == 1)
+                    if (detail == 1 && list == 0)
                       Text(
                         '$number_of_reviews reviews',
                         style: TextStyle(
@@ -221,14 +230,45 @@ class CustomInfoCard extends StatelessWidget {
                         ),
                       ),
                     if (detail == 0)
-                      Text(
-                        '$description',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontStyle: FontStyle.italic,
-                          color: Colors.grey,
+                      GestureDetector(
+                        onTap: () {
+                          if (review == 1) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => ExtendedReview(
+                                  imagePath: imagePath,
+                                  name: name,
+                                  description: description,
+                                  size: size,
+                                  reviewedBy: reviewedBy,
+                                  listBy: listBy,
+                                  reviewer: reviewer,
+                                  creator: creator,
+                                  rating: rating,
+                                  year: year,
+                                  number: number,
+                                  genre: genre,
+                                  artist: artist,
+                                  number_of_reviews: number_of_reviews,
+                                  imageCreator: imageCreator,
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                        child: Text(
+                          '$description',
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontStyle: FontStyle.italic,
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
+
                   ],
                 ),
               ),

@@ -13,6 +13,7 @@ final List<Map<String, dynamic>> reviews = [
     'artist' : 'Jeff Buckley',
     'number_of_reviews' : 20,
     'rating': 5,
+    'imageCreator' : 'assets/space.jpg'
   },
   {
     'image': 'assets/youdpreferanastronaut.png', // Replace with local image asset
@@ -28,6 +29,7 @@ final List<Map<String, dynamic>> reviews = [
     'artist' : 'Hum',
     'number_of_reviews' : 20,
     'rating': 5,
+    'imageCreator' : 'space.jpg'
   },
   {
     'image': 'assets/goo.jpg', // Replace with local image asset
@@ -43,6 +45,7 @@ final List<Map<String, dynamic>> reviews = [
     'artist' : 'Sonic Youth',
     'number_of_reviews' : 20,
     'rating': 5,
+    'imageCreator' : 'space.jpg'
   },
   {
     'image': 'assets/withoutasound.jpg', // Replace with local image asset
@@ -58,6 +61,7 @@ final List<Map<String, dynamic>> reviews = [
     'artist' : 'Dinosaur Jr.',
     'number_of_reviews' : 20,
     'rating': 5,
+    'imageCreator' : 'space.jpg'
   },
   {
     'image': 'assets/mellon.jpg', // Replace with local image asset
@@ -73,6 +77,7 @@ final List<Map<String, dynamic>> reviews = [
     'artist' : 'The Smashing Pumpkins',
     'number_of_reviews' : 20,
     'rating': 5,
+    'imageCreator' : 'space.jpg'
   },
 ];
 

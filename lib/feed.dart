@@ -8,6 +8,7 @@ class FeedList extends StatelessWidget {
   final int c;
   final int d;
   final int f;
+  final int j;
 
   const FeedList({
     Key? key,
@@ -17,6 +18,7 @@ class FeedList extends StatelessWidget {
     required this.c,
     required this.d,
     required this.f,
+    required this.j,
   }) : super(key: key);
 
   @override
@@ -28,37 +30,29 @@ class FeedList extends StatelessWidget {
         final item = items[index];
 
         // Check if rating exists and pass it, or pass null if it doesn't
-        final rating = item['rating'] != null ? item['rating'] as int : null;
-        final reviewedBy = item['reviewedBy'] != null ? item['reviewedBy'] as String : null;
-        final listBy = item['listBy'] != null ? item['listBy'] as String : null;
-        final reviewer = item['reviewer'] != null ? item['reviewer'] as String : null;
-        final creator = item['creator'] != null ? item['creator'] as String : null;
-        final year = item['year'] != null ? item['year'] as String : null;
-        final number = item['number'] != null ? item['number'] as int : null;
-        final genre = item['genre'] != null ? item['genre'] as String : null;
-        final artist = item['artist'] != null ? item['artist'] as String : null;
-        final reviews = item['number_of_reviews'] != null ? item['number_of_reviews'] as int : null;
         final size = item['size'] != null ? item['size'] as double : 150.0;
         return CustomInfoCard(
-          imagePath: item['image'] ?? '',
+          imagePath: item['image']  ?? '',
           name: item['title'] ?? '',
           description: item['description'] ?? '',
-          reviewedBy: reviewedBy,
-          listBy: listBy,
-          reviewer: reviewer,
-          creator: creator,
-          rating: rating,
+          reviewedBy: item['reviewedBy'] ?? '',
+          listBy: item['listBy'] ?? '',
+          reviewer: item['reviewer'] ?? '',
+          creator: item['creator'] ?? '',
+          rating: item['rating'] ?? '',
           size: size,
-          year: year,
-          number: number,
-          genre: genre,
-          artist: artist,
-          number_of_reviews: reviews,
+          year: item['year'] ?? '',
+          number: item['number'] ?? '',
+          genre: item['genres'] ?? '',
+          artist: item['artist'] ?? '',
+          number_of_reviews: item['number_of_reviews'] ?? '',
           review : a,
           activity: b,
           list: c,
           detail: d,
           charts: f,
+          outside: j,
+          imageCreator: item['imageCreator'] ?? '',
         );
       },
     );

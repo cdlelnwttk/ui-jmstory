@@ -78,7 +78,7 @@ class DetailPage extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: SizedBox(
-                  height: 350,
+                  height: 300,
                   child: Image.asset(
                     imagePath,
                     width: double.infinity,
@@ -94,20 +94,20 @@ class DetailPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Release Type: Album", style: TextStyle(fontSize: 20)),
+                  Text("Release Type: Album", style: TextStyle(fontSize: 18)),
                   if (year != null)
-                    Text("Release Date: $year", style: TextStyle(fontSize: 20)),
+                    Text("Release Date: $year", style: TextStyle(fontSize: 18)),
                   if (genre != null)
-                    Text("Genres: $genre", style: TextStyle(fontSize: 20)),
+                    Text("Genres: $genre", style: TextStyle(fontSize: 18)),
                   if (rating != null)
                     Row(
                       children: [
-                        Text("Rating: ", style: TextStyle(fontSize: 20)),
+                        Text("Average Rating: ", style: TextStyle(fontSize: 18)),
                         ...List.generate(5, (index) {
                           return Icon(
                             index < rating! ? Icons.star : Icons.star_border,
                             color: Colors.amber,
-                            size: 30,
+                            size: 18,
                           );
                         }),
                       ],

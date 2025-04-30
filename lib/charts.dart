@@ -109,7 +109,7 @@ class _ChartsPageState extends State<ChartsPage> {
             ),
           ),
           Expanded(
-            child: FeedList(items: reviews, a: 0, b: 0, c:0, d:1, f:1),
+            child: FeedList(items: reviews, a: 0, b: 0, c:0, d:1, f:1, j: 0),
           ),
         ],
       ),

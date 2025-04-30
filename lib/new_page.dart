@@ -6,6 +6,10 @@ import 'bottom_nav.dart';
 import 'main.dart';
 import 'feed.dart';
 import 'nav_logic.dart';
+import 'review_widget.dart'; // Import the file containing CustomRowWidget
+import 'user_feed.dart';
+import 'package:untitled3/data/user_info_data.dart';
+
 class NewPage extends StatefulWidget {
   final int initialTabIndex;
 
@@ -212,10 +216,10 @@ class _NewPageState extends State<NewPage> with SingleTickerProviderStateMixin {
                   ),
                 )
 ,
-                FeedList(items: reviews, a: 1, b: 1, c: 0, d: 0, f: 0),
-                FeedList(items: reviews, a: 1, b: 0, c: 0, d: 0, f: 0),
-                FeedList(items: reviews, a: 0, b: 0, c: 1, d: 0, f: 0),
-                FeedList(items: friends, a: 0, b: 0, c: 0, d: 0, f: 0),
+                FeedList(items: reviews, a: 1, b: 1, c: 0, d: 0, f: 0, j: 0),
+                FeedList(items: reviews, a: 1, b: 0, c: 0, d: 0, f: 0, j: 0),
+                FeedList(items: reviews, a: 0, b: 0, c: 1, d: 0, f: 0, j: 0),
+                FeedPage(users: users),
               ],
             ),
           ),

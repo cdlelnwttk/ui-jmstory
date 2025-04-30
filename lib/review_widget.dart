@@ -89,6 +89,7 @@ class CustomRowWidget extends StatelessWidget {
             bottomText,
             style: TextStyle(fontSize: 16),
           ),
+        SizedBox(height: 15.0),
       ],
     );
   }
