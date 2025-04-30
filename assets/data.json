@@ -1,0 +1,36 @@
+{
+  "reviews": [
+    {
+      "image": "assets/grace.jpg",
+      "title": "Grace",
+      "description": "This is a text field",
+      "reviewer": "username",
+      "reviewedBy": "username",
+      "creator": "username",
+      "createdBy": "username",
+      "year": "October 12 1994",
+      "number": 1,
+      "genre": "Rock",
+      "artist": "Jeff Buckley",
+      "number_of_reviews": 20,
+      "rating": 5,
+      "imageCreator": "assets/space.jpg"
+    },
+    {
+      "image": "assets/youdpreferanastronaut.png",
+      "title": "You'd Prefer an Astronaut",
+      "description": "This is a text field",
+      "reviewer": "username",
+      "reviewedBy": "username",
+      "creator": "username",
+      "createdBy": "username",
+      "year": "October 12 1994",
+      "number": 2,
+      "genre": "Rock",
+      "artist": "Hum",
+      "number_of_reviews": 20,
+      "rating": 5,
+      "imageCreator": "assets/space.jpg"
+    }
+  ]
+}
