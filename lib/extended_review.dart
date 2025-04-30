@@ -118,12 +118,17 @@ class ExtendedReview extends StatelessWidget {
                 ],
               ),
             ),
-            Row(
-              children: [
-                const SizedBox(width: 16), // Space from left wall
-                CustomRowWidget(imagePath: imageCreator, textBoxContent: reviewer, rating: rating, bottomText: description, imageHeight: 50, imageWidth: 50),
-              ],
-            )
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0),
+              child: CustomRowWidget(
+                imagePath: imageCreator,
+                textBoxContent: reviewer,
+                rating: rating,
+                bottomText: description,
+                imageHeight: 50,
+                imageWidth: 50,
+              ),
+            ),
 
             // Feed Section
           ],
