@@ -18,7 +18,7 @@ void handleNavTap(BuildContext context, int index) {
   } else if (index == 2) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => AddingPage()), // Adjust as needed
+      MaterialPageRoute(builder: (context) => SearchWidgetPage()), // Adjust as needed
     );
   } else if (index == 1) {
     Navigator.push(

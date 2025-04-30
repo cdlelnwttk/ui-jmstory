@@ -9,6 +9,9 @@ import 'search.dart';
 import 'review_widget.dart'; // Import the file containing CustomRowWidget
 import 'user_feed.dart';
 import 'package:untitled3/data/user_info_data.dart';
+import 'drawer.dart';
+import 'nav_logic.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -82,106 +85,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Music Review App'),
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/space.jpg'), // Local asset image
-                  fit: BoxFit.cover,
-                ),
-              ),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => NewPage(initialTabIndex: 0),
-                    ),
-                  );
-                },
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    CircleAvatar(
-                      radius: 30,
-                      backgroundImage: AssetImage('assets/red.jpg'), // Local asset image
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      'Username',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    Text(
-                      'user@example.com',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            ListTile(
-              leading: Icon(Icons.person),
-              title: Text('Profile'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => NewPage(initialTabIndex: 0),
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.access_time),
-              title: Text('Activity'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => NewPage(initialTabIndex: 1),
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.rate_review),
-              title: Text('Reviews'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => NewPage(initialTabIndex: 2),
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.list),
-              title: Text('Lists'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => NewPage(initialTabIndex: 3),
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
+      drawer: CustomDrawer(),
       body: _selectedIndex == 0
           ? DefaultTabController(
         length: 4,
@@ -215,10 +120,14 @@ class _MyHomePageState extends State<MyHomePage> {
           style: TextStyle(fontSize: 24),
         ),
       ),
-      // Use the CustomBottomNavBar
       bottomNavigationBar: CustomBottomNavBar(
         currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+          handleNavTap(context, index); // use shared nav logic
+        },
       ),
     );
   }

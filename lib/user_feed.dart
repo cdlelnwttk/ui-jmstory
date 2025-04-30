@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 
 class FeedPage extends StatelessWidget {
   final List<Map<String, dynamic>> users;
+  final int a;
 
   // Constructor to accept the list of users
-  const FeedPage({Key? key, required this.users}) : super(key: key);
+  const FeedPage({Key? key, required this.users, required this.a}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +22,7 @@ class FeedPage extends StatelessWidget {
           bottomText: item['bottomText'],
           imageHeight: item['imageHeight'],
           imageWidth: item['imageWidth'],
+          review: a,
         );
       },
     );

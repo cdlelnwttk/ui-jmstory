@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'review_widget.dart'; // Contains CustomRowWidget
 import 'user_feed.dart'; // Contains FeedPage
 import 'package:untitled3/data/user_info_data.dart'; // Your users list
+import 'bottom_nav.dart';
+import 'nav_logic.dart';
+import 'drawer.dart';
 
-class DetailPage extends StatelessWidget {
+class DetailPage extends StatefulWidget {
   final String imagePath;
   final String name;
   final String? description;
@@ -38,11 +41,17 @@ class DetailPage extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _DetailPageState createState() => _DetailPageState();
+}
+
+class _DetailPageState extends State<DetailPage> {
+  int _selectedIndex = 0;
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(name),
-        backgroundColor: Theme.of(context).primaryColor,
+        title: Text('Release'),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -52,7 +61,7 @@ class DetailPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
               child: Text(
-                name,
+                widget.name,
                 style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
@@ -62,11 +71,11 @@ class DetailPage extends StatelessWidget {
             ),
 
             // Artist
-            if (artist != null)
+            if (widget.artist != null)
               Padding(
                 padding: const EdgeInsets.only(top: 4.0, bottom: 8.0),
                 child: Text(
-                  "by $artist",
+                  "by ${widget.artist}",
                   style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
                   textAlign: TextAlign.center,
                 ),
@@ -78,9 +87,9 @@ class DetailPage extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: SizedBox(
-                  height: 300,
+                  height: 250,
                   child: Image.asset(
-                    imagePath,
+                    widget.imagePath,
                     width: double.infinity,
                     fit: BoxFit.contain,
                   ),
@@ -95,17 +104,17 @@ class DetailPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("Release Type: Album", style: TextStyle(fontSize: 18)),
-                  if (year != null)
-                    Text("Release Date: $year", style: TextStyle(fontSize: 18)),
-                  if (genre != null)
-                    Text("Genres: $genre", style: TextStyle(fontSize: 18)),
-                  if (rating != null)
+                  if (widget.year != null)
+                    Text("Release Date: ${widget.year}", style: TextStyle(fontSize: 18)),
+                  if (widget.genre != null)
+                    Text("Genres: ${widget.genre}", style: TextStyle(fontSize: 18)),
+                  if (widget.rating != null)
                     Row(
                       children: [
                         Text("Average Rating: ", style: TextStyle(fontSize: 18)),
                         ...List.generate(5, (index) {
                           return Icon(
-                            index < rating! ? Icons.star : Icons.star_border,
+                            index < widget.rating! ? Icons.star : Icons.star_border,
                             color: Colors.amber,
                             size: 18,
                           );
@@ -113,21 +122,31 @@ class DetailPage extends StatelessWidget {
                       ],
                     ),
                   SizedBox(height: 10),
-                  if (number_of_reviews != null)
+                  if (widget.number_of_reviews != null)
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
-                      child: Text("$number_of_reviews Reviews", style: TextStyle(fontSize: 20)),
+                      child: Text("${widget.number_of_reviews} Reviews", style: TextStyle(fontSize: 20)),
                     ),
                 ],
               ),
             ),
-            SizedBox(
-              height: 400, // or whatever fits your design
-              child: FeedPage(users: users),
-            ),
+
             // Feed Section
+            SizedBox(
+              height: 400,
+              child: FeedPage(users: users, a:1),
+            ),
           ],
         ),
+      ),
+      bottomNavigationBar: CustomBottomNavBar(
+        currentIndex: _selectedIndex,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+          handleNavTap(context, index); // use shared nav logic
+        },
       ),
     );
   }

@@ -3,6 +3,8 @@ import 'feed.dart';
 import 'package:untitled3/data/release_card_data.dart';
 import 'bottom_nav.dart';
 import 'nav_logic.dart';
+import 'drawer.dart';
+
 class ChartsPage extends StatefulWidget {
   @override
   _ChartsPageState createState() => _ChartsPageState();
@@ -29,8 +31,8 @@ class _ChartsPageState extends State<ChartsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Charts'),
       ),
+      drawer: CustomDrawer(),
       backgroundColor: Colors.white,
       body: Column(
         children: [

@@ -7,6 +7,7 @@ class CustomRowWidget extends StatelessWidget {
   final String bottomText;
   final double imageHeight;
   final double imageWidth;
+  final int review;
 
   const CustomRowWidget({
     required this.imagePath,
@@ -15,6 +16,7 @@ class CustomRowWidget extends StatelessWidget {
     required this.bottomText,
     required this.imageHeight,
     required this.imageWidth,
+    required this.review,
     Key? key,
   }) : super(key: key);
 
@@ -60,7 +62,7 @@ class CustomRowWidget extends StatelessWidget {
                       ),
                     ),
 
-                    // Rating aligned to top-right
+                    if (review == 1)
                     Align(
                       alignment: Alignment.centerRight,
                       child: Padding(
@@ -83,12 +85,14 @@ class CustomRowWidget extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 15.0),
         // Bottom text aligned with start of image
+          SizedBox(height: 15.0),
+        if (review == 1)
            Text(
             bottomText,
             style: TextStyle(fontSize: 16),
           ),
+        if (review == 1)
         SizedBox(height: 15.0),
       ],
     );

@@ -4,8 +4,11 @@ import 'user_feed.dart'; // Contains FeedPage
 import 'package:untitled3/data/user_info_data.dart'; // Your users list
 import 'package:untitled3/data/release_card_data.dart';
 import 'feed.dart';
+import 'bottom_nav.dart';
+import 'nav_logic.dart';
+import 'drawer.dart';
 
-class ListPage extends StatelessWidget {
+class ListPage extends StatefulWidget {
   final String imagePath;
   final String name;
   final String description;
@@ -40,49 +43,50 @@ class ListPage extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<ListPage> createState() => _ListPageState();
+}
+
+class _ListPageState extends State<ListPage> {
+  int _selectedIndex = 0;
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(name),
-        backgroundColor: Theme.of(context).primaryColor,
+        title: Text('List'),
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Name
             Padding(
               padding: const EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
               child: Text(
-                name,
-                style: TextStyle(
+                widget.name,
+                style: const TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,
               ),
             ),
-
-            // Artist
-            if (creator != null)
+            if (widget.creator.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.only(top: 4.0, bottom: 8.0),
                 child: Text(
-                  "curated by $creator",
-                  style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
+                  "curated by ${widget.creator}",
+                  style: const TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
                   textAlign: TextAlign.center,
                 ),
               ),
-
-            // Image
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: SizedBox(
-                  height: 300,
+                  height: 250,
                   child: Image.asset(
-                    imagePath,
+                    widget.imagePath,
                     width: double.infinity,
                     fit: BoxFit.contain,
                   ),
@@ -92,18 +96,21 @@ class ListPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 4.0, bottom: 8.0),
               child: Text(
-                "$description",
-                style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
+                widget.description,
+                style: const TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
                 textAlign: TextAlign.center,
               ),
             ),
             SizedBox(
-              height: 500, // or whatever fits your design
-              child: FeedList(items: reviews, a: 0, b: 0, c: 1, d: 1, f: 1, j:1),
+              height: 500,
+              child: FeedList(items: reviews, a: 0, b: 0, c: 1, d: 1, f: 1, j: 1),
             ),
-            // Feed Section
           ],
         ),
+      ),
+      bottomNavigationBar: CustomBottomNavBar(
+        currentIndex: _selectedIndex,
+        onTap: (index) => handleNavTap(context, index),
       ),
     );
   }

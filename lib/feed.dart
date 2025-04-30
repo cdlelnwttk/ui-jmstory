@@ -43,7 +43,7 @@ class FeedList extends StatelessWidget {
           size: size,
           year: item['year'] ?? '',
           number: item['number'] ?? '',
-          genre: item['genres'] ?? '',
+          genre: item['genre'] ?? '',
           artist: item['artist'] ?? '',
           number_of_reviews: item['number_of_reviews'] ?? '',
           review : a,

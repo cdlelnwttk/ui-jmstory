@@ -2,16 +2,19 @@ import 'package:flutter/material.dart';
 import 'review_widget.dart'; // Contains CustomRowWidget
 import 'user_feed.dart'; // Contains FeedPage
 import 'package:untitled3/data/user_info_data.dart'; // Your users list
+import 'bottom_nav.dart';
+import 'nav_logic.dart';
+import 'drawer.dart';
 
-class ExtendedReview extends StatelessWidget {
+class ExtendedReview extends StatefulWidget {
   final String imagePath;
   final String name;
   final String description;
   final double size;
   final String reviewedBy;
   final String listBy;
-  final String  reviewer;
-  final String  creator;
+  final String reviewer;
+  final String creator;
   final int rating;
   final String year;
   final int number;
@@ -40,11 +43,17 @@ class ExtendedReview extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<ExtendedReview> createState() => _ExtendedReviewState();
+}
+
+class _ExtendedReviewState extends State<ExtendedReview> {
+  int _selectedIndex = 0;
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(name),
-        backgroundColor: Theme.of(context).primaryColor,
+        title: Text('Review'),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -54,8 +63,8 @@ class ExtendedReview extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
               child: Text(
-                name,
-                style: TextStyle(
+                widget.name,
+                style: const TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
                 ),
@@ -64,15 +73,14 @@ class ExtendedReview extends StatelessWidget {
             ),
 
             // Artist
-            if (artist != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 4.0, bottom: 8.0),
-                child: Text(
-                  "by $artist",
-                  style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
-                  textAlign: TextAlign.center,
-                ),
+            Padding(
+              padding: const EdgeInsets.only(top: 4.0, bottom: 8.0),
+              child: Text(
+                "by ${widget.artist}",
+                style: const TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
+                textAlign: TextAlign.center,
               ),
+            ),
 
             // Image
             Padding(
@@ -80,9 +88,9 @@ class ExtendedReview extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: SizedBox(
-                  height: 300,
+                  height: 250,
                   child: Image.asset(
-                    imagePath,
+                    widget.imagePath,
                     width: double.infinity,
                     fit: BoxFit.contain,
                   ),
@@ -96,43 +104,50 @@ class ExtendedReview extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Release Type: Album", style: TextStyle(fontSize: 18)),
-                  if (year != null)
-                    Text("Release Date: $year", style: TextStyle(fontSize: 18)),
-                  if (genre != null)
-                    Text("Genres: $genre", style: TextStyle(fontSize: 18)),
-                  if (rating != null)
-                    Row(
-                      children: [
-                        Text("Average Rating: ", style: TextStyle(fontSize: 18)),
-                        ...List.generate(5, (index) {
-                          return Icon(
-                            index < rating! ? Icons.star : Icons.star_border,
-                            color: Colors.amber,
-                            size: 18,
-                          );
-                        }),
-                      ],
-                    ),
-                  SizedBox(height: 10),
+                  const Text("Release Type: Album", style: TextStyle(fontSize: 18)),
+                  Text("Release Date: ${widget.year}", style: const TextStyle(fontSize: 18)),
+                  Text("Genres: ${widget.genre}", style: const TextStyle(fontSize: 18)),
+                  Row(
+                    children: [
+                      const Text("Average Rating: ", style: TextStyle(fontSize: 18)),
+                      ...List.generate(5, (index) {
+                        return Icon(
+                          index < widget.rating ? Icons.star : Icons.star_border,
+                          color: Colors.amber,
+                          size: 18,
+                        );
+                      }),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
                 ],
               ),
             ),
+
+            // Custom Row
             Padding(
               padding: const EdgeInsets.only(left: 16.0),
               child: CustomRowWidget(
-                imagePath: imageCreator,
-                textBoxContent: reviewer,
-                rating: rating,
-                bottomText: description,
+                imagePath: widget.imageCreator,
+                textBoxContent: widget.reviewer,
+                rating: widget.rating,
+                bottomText: widget.description,
                 imageHeight: 50,
                 imageWidth: 50,
+                review: 1,
               ),
             ),
-
-            // Feed Section
           ],
         ),
+      ),
+      bottomNavigationBar: CustomBottomNavBar(
+        currentIndex: _selectedIndex,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+          handleNavTap(context, index); // use shared nav logic
+        },
       ),
     );
   }
