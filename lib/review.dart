@@ -159,6 +159,7 @@ class _SearchWidgetPageState extends State<SearchWidgetPage> {
                       charts: 0,
                       outside: 0,
                       imageCreator: _selectedReview!['imageCreator']!,
+                      remove: 0,
                     ),
                     SizedBox(height: 10),
                     Row(

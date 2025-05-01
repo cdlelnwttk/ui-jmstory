@@ -104,7 +104,7 @@ class _ListPageState extends State<ListPage> {
             ),
             SizedBox(
               height: 500,
-              child: FeedList(items: reviews, a: 0, b: 0, c: 1, d: 1, f: 1, j: 1),
+              child: FeedList(items: reviews, a: 0, b: 0, c: 1, d: 1, f: 1, j: 1, remove: 0),
             ),
           ],
         ),

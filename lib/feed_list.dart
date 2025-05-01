@@ -10,7 +10,7 @@ class FeedList extends StatelessWidget {
   final int d;
   final int f;
   final int j;
-
+  final int remove;
   const FeedList({
     Key? key,
     required this.items,
@@ -20,6 +20,7 @@ class FeedList extends StatelessWidget {
     required this.d,
     required this.f,
     required this.j,
+    required this.remove,
   }) : super(key: key);
 
   @override
@@ -54,6 +55,7 @@ class FeedList extends StatelessWidget {
           charts: f,
           outside: j,
           imageCreator: item['imageCreator'] ?? '',
+          remove : remove,
         );
       },
     );

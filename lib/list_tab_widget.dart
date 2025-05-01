@@ -129,6 +129,7 @@ class _ListTabWidgetState extends State<ListTabWidget> {
                           charts: 0,
                           outside: 0,
                           imageCreator: _selectedItem!['imageCreator'],
+                          remove: 0,
                         ),
                         Positioned(
                           top: 0,
@@ -147,7 +148,7 @@ class _ListTabWidgetState extends State<ListTabWidget> {
                           _addToFeed(_selectedItem!);
                         }
                       },
-                      child: Text("Add to Feed"),
+                      child: Text("Add to list"),
                     ),
                   ],
                 ),
@@ -160,7 +161,7 @@ class _ListTabWidgetState extends State<ListTabWidget> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Your Feed:'),
+                    Text('Your list:'),
                     for (var item in _feed)
                       Padding(
                         padding: const EdgeInsets.only(top: 10.0),
@@ -186,6 +187,7 @@ class _ListTabWidgetState extends State<ListTabWidget> {
                           charts: 0,
                           outside: 0,
                           imageCreator: item['imageCreator'],
+                          remove: 1,
                         ),
                       ),
                   ],

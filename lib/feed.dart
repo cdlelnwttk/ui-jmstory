@@ -11,17 +11,18 @@ class _FeedPageState extends State<FeedPage> {
   List<Map<String, dynamic>> _items = []; // Hold the list of items
 
   // Example values for a, b, c, d, f, j
-  final int a = 1;
-  final int b = 2;
-  final int c = 3;
-  final int d = 4;
-  final int f = 5;
-  final int j = 6;
-
+  final int a = 0;
+  final int b = 0;
+  final int c = 0;
+  final int d = 1;
+  final int f = 0;
+  final int j = 0;
+  final int remove = 1;
   // This function adds a new item to the feed
   void _addToFeed(Map<String, dynamic> newItem) {
     setState(() {
-      _items.add(newItem);  // Add the new item to the list
+      _items.add(newItem);
+      // Add the new item to the list
     });
   }
 
@@ -66,6 +67,7 @@ class _FeedPageState extends State<FeedPage> {
               d: d,
               f: f,
               j: j,
+              remove: remove,
             ),
           ),
         ],

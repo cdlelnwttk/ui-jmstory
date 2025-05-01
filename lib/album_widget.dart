@@ -3,7 +3,7 @@ import 'detail_page.dart';
 import 'list_page.dart';
 import 'extended_review.dart';
 
-class CustomInfoCard extends StatelessWidget {
+class CustomInfoCard extends StatefulWidget {
   final String imagePath;
   final String name;
   final String description;
@@ -25,6 +25,7 @@ class CustomInfoCard extends StatelessWidget {
   final int charts;
   final int outside;
   final String imageCreator;
+  final int remove; // NEW: determines whether to show the remove button
 
   const CustomInfoCard({
     required this.imagePath,
@@ -48,68 +49,85 @@ class CustomInfoCard extends StatelessWidget {
     required this.charts,
     required this.outside,
     required this.imageCreator,
+    required this.remove, // Default value is 0 (do not show remove button)
     Key? key,
   }) : super(key: key);
 
   @override
+  _CustomInfoCardState createState() => _CustomInfoCardState();
+}
+
+class _CustomInfoCardState extends State<CustomInfoCard> {
+  bool _isVisible = true; // Control visibility of the card
+
+  void _handleRemove() {
+    setState(() {
+      _isVisible = false; // Hide the card when the remove button is pressed
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (!_isVisible) {
+      return SizedBox.shrink();  // Return an empty widget if not visible
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (activity == 1 && review == 1)
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
-                child: Text(
-                  '$reviewedBy reviewed...',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic,
-                    color: Colors.black,
-                  ),
+          if (widget.activity == 1 && widget.review == 1)
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
+              child: Text(
+                '${widget.reviewedBy} reviewed...',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                  color: Colors.black,
                 ),
               ),
-          if (activity == 1 && list == 1)
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
-                child: Text(
-                  '$listBy created...',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic,
-                    color: Colors.black,
-                  ),
+            ),
+          if (widget.activity == 1 && widget.list == 1)
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
+              child: Text(
+                '${widget.listBy} created...',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                  color: Colors.black,
                 ),
               ),
+            ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Image on the left
               GestureDetector(
                 onTap: () {
-                  if (list == 1 && outside == 0) {
+                  if (widget.list == 1 && widget.outside == 0) {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (_) => ListPage(
-                          imagePath: imagePath,
-                          name: name,
-                          description: description,
-                          size: size,
-                          reviewedBy: reviewedBy,
-                          listBy: listBy,
-                          reviewer: reviewer,
-                          creator: creator,
-                          rating: rating,
-                          year: year,
-                          number: number,
-                          genre: genre,
-                          artist: artist,
-                          number_of_reviews: number_of_reviews,
-                          // pass the required arguments here
+                          imagePath: widget.imagePath,
+                          name: widget.name,
+                          description: widget.description,
+                          size: widget.size,
+                          reviewedBy: widget.reviewedBy,
+                          listBy: widget.listBy,
+                          reviewer: widget.reviewer,
+                          creator: widget.creator,
+                          rating: widget.rating,
+                          year: widget.year,
+                          number: widget.number,
+                          genre: widget.genre,
+                          artist: widget.artist,
+                          number_of_reviews: widget.number_of_reviews,
                         ),
                       ),
                     );
@@ -118,29 +136,29 @@ class CustomInfoCard extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (_) => DetailPage(
-                          imagePath: imagePath,
-                          name: name,
-                          description: description,
-                          size: size,
-                          reviewedBy: reviewedBy,
-                          listBy: listBy,
-                          reviewer: reviewer,
-                          creator: creator,
-                          rating: rating,
-                          year: year,
-                          number: number,
-                          genre: genre,
-                          artist: artist,
-                          number_of_reviews: number_of_reviews,
+                          imagePath: widget.imagePath,
+                          name: widget.name,
+                          description: widget.description,
+                          size: widget.size,
+                          reviewedBy: widget.reviewedBy,
+                          listBy: widget.listBy,
+                          reviewer: widget.reviewer,
+                          creator: widget.creator,
+                          rating: widget.rating,
+                          year: widget.year,
+                          number: widget.number,
+                          genre: widget.genre,
+                          artist: widget.artist,
+                          number_of_reviews: widget.number_of_reviews,
                         ),
                       ),
                     );
                   }
                 },
                 child: Image.asset(
-                  imagePath,
-                  width: size,
-                  height: size,
+                  widget.imagePath,
+                  width: widget.size,
+                  height: widget.size,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -151,9 +169,8 @@ class CustomInfoCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     GestureDetector(
-
                       child: Text(
-                        name,
+                        widget.name,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -161,57 +178,57 @@ class CustomInfoCard extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 4),
-                    if (detail == 1)
+                    if (widget.detail == 1)
                       Text(
-                        '$artist',
+                        '${widget.artist}',
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                         ),
                       ),
-                    if (detail == 1)
+                    if (widget.detail == 1)
                       Text(
-                        '$year',
+                        '${widget.year}',
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.black,
                         ),
                       ),
-                    if (detail == 1)
+                    if (widget.detail == 1)
                       Text(
-                        '$genre',
-                         style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                      ),
-                    if (list == 1 && outside == 0)
-                      Text(
-                        'creator: $creator',
+                        '${widget.genre}',
                         style: TextStyle(
                           fontSize: 14,
-                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.bold,
                           color: Colors.black,
                         ),
                       ),
-                    if (review == 1)
+                    if (widget.list == 1 && widget.outside == 0)
                       Text(
-                        'Reviewer: $reviewer',
+                        'creator: ${widget.creator}',
                         style: TextStyle(
                           fontSize: 14,
                           fontStyle: FontStyle.italic,
                           color: Colors.black,
                         ),
                       ),
-                    if (list == 0)
+                    if (widget.review == 1)
+                      Text(
+                        'Reviewer: ${widget.reviewer}',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontStyle: FontStyle.italic,
+                          color: Colors.black,
+                        ),
+                      ),
+                    if (widget.list == 0)
                       Padding(
                         padding: const EdgeInsets.only(top: 4.0),
                         child: Row(
                           children: List.generate(5, (index) {
                             return Icon(
-                              index < rating!
+                              index < widget.rating
                                   ? Icons.star
                                   : Icons.star_border,
                               color: Colors.amber,
@@ -220,45 +237,45 @@ class CustomInfoCard extends StatelessWidget {
                           }),
                         ),
                       ),
-                    if (detail == 1 && list == 0)
+                    if (widget.detail == 1 && widget.list == 0)
                       Text(
-                        '$number_of_reviews reviews',
+                        '${widget.number_of_reviews} reviews',
                         style: TextStyle(
                           fontSize: 14,
                           fontStyle: FontStyle.italic,
                           color: Colors.black,
                         ),
                       ),
-                    if (detail == 0)
+                    if (widget.detail == 0)
                       GestureDetector(
                         onTap: () {
-                          if (review == 1) {
+                          if (widget.review == 1) {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (_) => ExtendedReview(
-                                  imagePath: imagePath,
-                                  name: name,
-                                  description: description,
-                                  size: size,
-                                  reviewedBy: reviewedBy,
-                                  listBy: listBy,
-                                  reviewer: reviewer,
-                                  creator: creator,
-                                  rating: rating,
-                                  year: year,
-                                  number: number,
-                                  genre: genre,
-                                  artist: artist,
-                                  number_of_reviews: number_of_reviews,
-                                  imageCreator: imageCreator,
+                                  imagePath: widget.imagePath,
+                                  name: widget.name,
+                                  description: widget.description,
+                                  size: widget.size,
+                                  reviewedBy: widget.reviewedBy,
+                                  listBy: widget.listBy,
+                                  reviewer: widget.reviewer,
+                                  creator: widget.creator,
+                                  rating: widget.rating,
+                                  year: widget.year,
+                                  number: widget.number,
+                                  genre: widget.genre,
+                                  artist: widget.artist,
+                                  number_of_reviews: widget.number_of_reviews,
+                                  imageCreator: widget.imageCreator,
                                 ),
                               ),
                             );
                           }
                         },
                         child: Text(
-                          '$description',
+                          '${widget.description}',
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -268,21 +285,26 @@ class CustomInfoCard extends StatelessWidget {
                           ),
                         ),
                       ),
-
                   ],
                 ),
               ),
-              // Number on the right
-              if (charts == 1)
+              // Number or remove icon on the right
+              if (widget.charts == 1)
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
                   child: Text(
-                    '$number',
+                    '${widget.number}',
                     style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                ),
+              if (widget.remove == 1)
+                IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: _handleRemove, // Hide card when pressed
+                  tooltip: 'Remove',
                 ),
             ],
           ),
@@ -291,6 +313,8 @@ class CustomInfoCard extends StatelessWidget {
     );
   }
 }
+
+
 
 
 
