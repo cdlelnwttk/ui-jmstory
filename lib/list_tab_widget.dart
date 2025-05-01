@@ -13,6 +13,8 @@ class ListTabWidget extends StatefulWidget {
 
 class _ListTabWidgetState extends State<ListTabWidget> {
   final TextEditingController _searchController = TextEditingController();
+  final TextEditingController _listNameController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
   List<Map<String, dynamic>> _filteredData = [];
   bool _showSuggestions = false;
   Map<String, dynamic>? _selectedItem;
@@ -28,8 +30,6 @@ class _ListTabWidgetState extends State<ListTabWidget> {
     setState(() {
       _selectedItem = null;
       _showSuggestions = false;
-      // Don't clear the search text so user can edit it
-      // Optionally clear it if you *want* to reset the search bar too
     });
   }
 
@@ -48,13 +48,14 @@ class _ListTabWidgetState extends State<ListTabWidget> {
   @override
   void dispose() {
     _searchController.dispose();
+    _listNameController.dispose();
+    _descriptionController.dispose();
     super.dispose();
   }
 
   void _addToFeed(Map<String, dynamic> item) {
-    // Add the selected item to the feed list
     setState(() {
-      _feed.add(item); // This adds the item to the list
+      _feed.add(item); // This adds the item to the feed list
     });
   }
 
@@ -66,12 +67,58 @@ class _ListTabWidgetState extends State<ListTabWidget> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Text box for "List Name"
+            TextField(
+              controller: _listNameController,
+              decoration: InputDecoration(
+                labelText: 'List Name',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 16),
+
+            // Image with a pencil icon centered using Row with MainAxisAlignment.center
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center, // This centers the contents of the Row
+              children: [
+                Image.asset(
+                  'assets/space.jpg', // Your pencil image path
+                  width: 250,
+                  height: 250,
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center, // This centers the contents of the Row
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                  },
+                  child: Text("Update List Picture"),
+                ),
+              ],
+            ),
+            SizedBox(height: 16),
+
+            // Edit List Picture Button
+            // Text box for "Description"
+            TextField(
+              controller: _descriptionController,
+              decoration: InputDecoration(
+                labelText: 'Description',
+                border: OutlineInputBorder(),
+              ),
+              maxLines: null,  // This allows the TextField to expand vertically
+              minLines: 2,     // Optional: sets the minimum number of lines
+            ),
+            SizedBox(height: 16),
+
             // Search bar
             TextField(
               controller: _searchController,
               onChanged: _search,
               decoration: InputDecoration(
-                labelText: 'Search Titles',
+                labelText: 'Search Releases to Add',
                 border: OutlineInputBorder(),
                 suffixIcon: Icon(Icons.search),
               ),
@@ -199,4 +246,5 @@ class _ListTabWidgetState extends State<ListTabWidget> {
     );
   }
 }
+
 
