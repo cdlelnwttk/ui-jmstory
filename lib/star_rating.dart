@@ -26,8 +26,8 @@ class _StarRatingState extends State<StarRating> {
           onTap: () => _onStarTapped(index),
           child: Icon(
             Icons.star,
-            color: index < _filledStars ? Colors.yellow : Colors.grey,
-            size: 40,
+            color: index < _filledStars ? Colors.amber : Colors.grey,
+            size: 30,
           ),
         );
       }),
