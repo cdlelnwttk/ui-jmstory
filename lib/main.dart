@@ -11,7 +11,7 @@ import 'user_feed.dart';
 import 'package:untitled3/data/user_info_data.dart';
 import 'drawer.dart';
 import 'nav_logic.dart';
-
+import 'feed_list.dart';
 void main() {
   runApp(MyApp());
 }

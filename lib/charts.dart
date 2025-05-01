@@ -4,7 +4,7 @@ import 'package:untitled3/data/release_card_data.dart';
 import 'bottom_nav.dart';
 import 'nav_logic.dart';
 import 'drawer.dart';
-
+import 'feed_list.dart';
 class ChartsPage extends StatefulWidget {
   @override
   _ChartsPageState createState() => _ChartsPageState();

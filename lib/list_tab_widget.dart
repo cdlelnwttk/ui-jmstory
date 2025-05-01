@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
-import 'package:image_picker/image_picker.dart';
 import 'album_widget.dart';
-
 class ListTabWidget extends StatefulWidget {
   final List<Map<String, dynamic>> reviews;
 
@@ -14,11 +12,10 @@ class ListTabWidget extends StatefulWidget {
 
 class _ListTabWidgetState extends State<ListTabWidget> {
   final TextEditingController _searchController = TextEditingController();
-  final TextEditingController _descController = TextEditingController();
   List<Map<String, dynamic>> _filteredData = [];
-  File? _pickedImage;
   bool _showSuggestions = false;
   Map<String, dynamic>? _selectedItem;
+  List<Map<String, dynamic>> _feed = []; // To store the selected items
 
   @override
   void initState() {
@@ -38,21 +35,17 @@ class _ListTabWidgetState extends State<ListTabWidget> {
     });
   }
 
-  Future<void> _pickImage() async {
-    final picker = ImagePicker();
-    final picked = await picker.pickImage(source: ImageSource.gallery);
-    if (picked != null) {
-      setState(() {
-        _pickedImage = File(picked.path);
-      });
-    }
-  }
-
   @override
   void dispose() {
     _searchController.dispose();
-    _descController.dispose();
     super.dispose();
+  }
+
+  void _addToFeed(Map<String, dynamic> item) {
+    // Add the selected item to the feed list
+    setState(() {
+      _feed.add(item); // This adds the item to the list
+    });
   }
 
   @override
@@ -72,39 +65,6 @@ class _ListTabWidgetState extends State<ListTabWidget> {
                 border: OutlineInputBorder(),
                 suffixIcon: Icon(Icons.search),
               ),
-            ),
-            SizedBox(height: 16),
-
-            // Image picker (always visible)
-            Row(
-              children: [
-                ElevatedButton.icon(
-                  icon: Icon(Icons.photo),
-                  label: Text('Pick Image'),
-                  onPressed: _pickImage,
-                ),
-                SizedBox(width: 10),
-                if (_pickedImage != null)
-                  Image.file(_pickedImage!, width: 100, height: 100),
-                if (_pickedImage == null)
-                  Container(
-                    width: 100,
-                    height: 100,
-                    color: Colors.grey[300],
-                    child: Icon(Icons.image, size: 40),
-                  ),
-              ],
-            ),
-            SizedBox(height: 16),
-
-            // Description box (always visible)
-            TextField(
-              controller: _descController,
-              decoration: InputDecoration(
-                labelText: 'Description',
-                border: OutlineInputBorder(),
-              ),
-              maxLines: 3,
             ),
             SizedBox(height: 16),
 
@@ -133,28 +93,58 @@ class _ListTabWidgetState extends State<ListTabWidget> {
             if (_selectedItem != null)
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
-                child: CustomInfoCard(
-                  imagePath: _selectedItem!['image'],
-                  name: _selectedItem!['title'],
-                  description: _selectedItem!['description'],
-                  size: 150,
-                  reviewedBy: _selectedItem!['reviewedBy'],
-                  listBy: _selectedItem!['createdBy'],
-                  reviewer: _selectedItem!['reviewer'],
-                  creator: _selectedItem!['creator'],
-                  rating: _selectedItem!['rating'],
-                  year: _selectedItem!['year'],
-                  number: _selectedItem!['number'],
-                  genre: _selectedItem!['genre'],
-                  artist: _selectedItem!['artist'],
-                  number_of_reviews: _selectedItem!['number_of_reviews'],
-                  review: 0,
-                  activity: 0,
-                  detail: 0,
-                  list: 1,
-                  charts: 0,
-                  outside: 0,
-                  imageCreator: _selectedItem!['imageCreator'],
+                child: Column(
+                  children: [
+                    CustomInfoCard(
+                      imagePath: _selectedItem!['image'],
+                      name: _selectedItem!['title'],
+                      description: _selectedItem!['description'],
+                      size: 150,
+                      reviewedBy: _selectedItem!['reviewedBy'],
+                      listBy: _selectedItem!['createdBy'],
+                      reviewer: _selectedItem!['reviewer'],
+                      creator: _selectedItem!['creator'],
+                      rating: _selectedItem!['rating'],
+                      year: _selectedItem!['year'],
+                      number: _selectedItem!['number'],
+                      genre: _selectedItem!['genre'],
+                      artist: _selectedItem!['artist'],
+                      number_of_reviews: _selectedItem!['number_of_reviews'],
+                      review: 0,
+                      activity: 0,
+                      detail: 0,
+                      list: 1,
+                      charts: 0,
+                      outside: 0,
+                      imageCreator: _selectedItem!['imageCreator'],
+                    ),
+                    SizedBox(height: 10),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_selectedItem != null) {
+                          _addToFeed(_selectedItem!); // Add the selected item directly to feed
+                        }
+                      },
+                      child: Text("Add to Feed"),
+                    ),
+                  ],
+                ),
+              ),
+
+            // Display the feed of selected items
+            if (_feed.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Your Feed:'),
+                    for (var item in _feed)
+                      ListTile(
+                        title: Text(item['title']),
+                        subtitle: Text(item['description']),
+                      ),
+                  ],
                 ),
               ),
           ],

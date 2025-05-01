@@ -4,13 +4,12 @@ import 'album_widget.dart';
 import 'package:untitled3/data/release_card_data.dart';
 import 'bottom_nav.dart';
 import 'main.dart';
-import 'feed.dart';
 import 'nav_logic.dart';
 import 'review_widget.dart'; // Import the file containing CustomRowWidget
 import 'user_feed.dart';
 import 'package:untitled3/data/user_info_data.dart';
 import 'drawer.dart';
-
+import 'feed_list.dart';
 class NewPage extends StatefulWidget {
   final int initialTabIndex;
 

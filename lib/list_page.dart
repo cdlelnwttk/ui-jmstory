@@ -7,6 +7,7 @@ import 'feed.dart';
 import 'bottom_nav.dart';
 import 'nav_logic.dart';
 import 'drawer.dart';
+import 'feed_list.dart';
 
 class ListPage extends StatefulWidget {
   final String imagePath;
