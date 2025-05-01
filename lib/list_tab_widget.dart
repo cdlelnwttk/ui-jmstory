@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'album_widget.dart';
+
 class ListTabWidget extends StatefulWidget {
   final List<Map<String, dynamic>> reviews;
 
@@ -21,6 +22,15 @@ class _ListTabWidgetState extends State<ListTabWidget> {
   void initState() {
     super.initState();
     _filteredData = List.from(widget.reviews);
+  }
+
+  void _clearSelectedItem() {
+    setState(() {
+      _selectedItem = null;
+      _showSuggestions = false;
+      // Don't clear the search text so user can edit it
+      // Optionally clear it if you *want* to reset the search bar too
+    });
   }
 
   void _search(String query) {
@@ -95,34 +105,46 @@ class _ListTabWidgetState extends State<ListTabWidget> {
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Column(
                   children: [
-                    CustomInfoCard(
-                      imagePath: _selectedItem!['image'],
-                      name: _selectedItem!['title'],
-                      description: _selectedItem!['description'],
-                      size: 150,
-                      reviewedBy: _selectedItem!['reviewedBy'],
-                      listBy: _selectedItem!['createdBy'],
-                      reviewer: _selectedItem!['reviewer'],
-                      creator: _selectedItem!['creator'],
-                      rating: _selectedItem!['rating'],
-                      year: _selectedItem!['year'],
-                      number: _selectedItem!['number'],
-                      genre: _selectedItem!['genre'],
-                      artist: _selectedItem!['artist'],
-                      number_of_reviews: _selectedItem!['number_of_reviews'],
-                      review: 0,
-                      activity: 0,
-                      detail: 0,
-                      list: 1,
-                      charts: 0,
-                      outside: 0,
-                      imageCreator: _selectedItem!['imageCreator'],
+                    Stack(
+                      children: [
+                        CustomInfoCard(
+                          imagePath: _selectedItem!['image'],
+                          name: _selectedItem!['title'],
+                          description: _selectedItem!['description'],
+                          size: 150,
+                          reviewedBy: _selectedItem!['reviewedBy'],
+                          listBy: _selectedItem!['createdBy'],
+                          reviewer: _selectedItem!['reviewer'],
+                          creator: _selectedItem!['creator'],
+                          rating: _selectedItem!['rating'],
+                          year: _selectedItem!['year'],
+                          number: _selectedItem!['number'],
+                          genre: _selectedItem!['genre'],
+                          artist: _selectedItem!['artist'],
+                          number_of_reviews: _selectedItem!['number_of_reviews'],
+                          review: 0,
+                          activity: 0,
+                          detail: 1,
+                          list: 0,
+                          charts: 0,
+                          outside: 0,
+                          imageCreator: _selectedItem!['imageCreator'],
+                        ),
+                        Positioned(
+                          top: 0,
+                          right: 0,
+                          child: IconButton(
+                            icon: Icon(Icons.close),
+                            onPressed: _clearSelectedItem,
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(height: 10),
                     ElevatedButton(
                       onPressed: () {
                         if (_selectedItem != null) {
-                          _addToFeed(_selectedItem!); // Add the selected item directly to feed
+                          _addToFeed(_selectedItem!);
                         }
                       },
                       child: Text("Add to Feed"),
@@ -131,7 +153,7 @@ class _ListTabWidgetState extends State<ListTabWidget> {
                 ),
               ),
 
-            // Display the feed of selected items
+            // Display the feed of selected items as CustomInfoCards
             if (_feed.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
@@ -140,9 +162,31 @@ class _ListTabWidgetState extends State<ListTabWidget> {
                   children: [
                     Text('Your Feed:'),
                     for (var item in _feed)
-                      ListTile(
-                        title: Text(item['title']),
-                        subtitle: Text(item['description']),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10.0),
+                        child: CustomInfoCard(
+                          imagePath: item['image'],
+                          name: item['title'],
+                          description: item['description'],
+                          size: 150,
+                          reviewedBy: item['reviewedBy'],
+                          listBy: item['createdBy'],
+                          reviewer: item['reviewer'],
+                          creator: item['creator'],
+                          rating: item['rating'],
+                          year: item['year'],
+                          number: item['number'],
+                          genre: item['genre'],
+                          artist: item['artist'],
+                          number_of_reviews: item['number_of_reviews'],
+                          review: 0,
+                          activity: 0,
+                          detail: 1,
+                          list: 0,
+                          charts: 0,
+                          outside: 0,
+                          imageCreator: item['imageCreator'],
+                        ),
                       ),
                   ],
                 ),
