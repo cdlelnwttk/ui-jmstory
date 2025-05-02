@@ -5,7 +5,8 @@ import 'package:untitled3/data/user_info_data.dart'; // Your users list
 import 'bottom_nav.dart';
 import 'nav_logic.dart';
 import 'drawer.dart';
-
+import 'detail_page.dart'; // Import the DetailPage
+import 'release_widget.dart';
 class ExtendedReview extends StatefulWidget {
   final String imagePath;
   final String name;
@@ -59,71 +60,23 @@ class _ExtendedReviewState extends State<ExtendedReview> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Name
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
-              child: Text(
-                widget.name,
-                style: const TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
-              ),
+            DetailPageWidget(
+              imagePath: widget.imagePath,
+              name: widget.name,
+              description: widget.description,
+              size: widget.size,
+              reviewedBy: widget.reviewedBy,
+              listBy: widget.listBy,
+              reviewer: widget.reviewer,
+              creator: widget.creator,
+              rating: widget.rating,
+              year: widget.year,
+              number: widget.number,
+              genre: widget.genre,
+              artist: widget.artist,
+              number_of_reviews: widget.number_of_reviews,
+              imageCreator: widget.imageCreator,
             ),
-
-            // Artist
-            Padding(
-              padding: const EdgeInsets.only(top: 4.0, bottom: 8.0),
-              child: Text(
-                "by ${widget.artist}",
-                style: const TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
-                textAlign: TextAlign.center,
-              ),
-            ),
-
-            // Image
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: SizedBox(
-                  height: 250,
-                  child: Image.asset(
-                    widget.imagePath,
-                    width: double.infinity,
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              ),
-            ),
-
-            // Info Section
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text("Release Type: Album", style: TextStyle(fontSize: 18)),
-                  Text("Release Date: ${widget.year}", style: const TextStyle(fontSize: 18)),
-                  Text("Genres: ${widget.genre}", style: const TextStyle(fontSize: 18)),
-                  Row(
-                    children: [
-                      const Text("Average Rating: ", style: TextStyle(fontSize: 18)),
-                      ...List.generate(5, (index) {
-                        return Icon(
-                          index < widget.rating ? Icons.star : Icons.star_border,
-                          color: Colors.amber,
-                          size: 18,
-                        );
-                      }),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                ],
-              ),
-            ),
-
             // Custom Row
             Padding(
               padding: const EdgeInsets.only(left: 16.0),

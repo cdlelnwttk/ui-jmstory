@@ -1,42 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:untitled3/release_widget.dart';
 import 'review_widget.dart'; // Contains CustomRowWidget
 import 'user_feed.dart'; // Contains FeedPage
 import 'package:untitled3/data/user_info_data.dart'; // Your users list
 import 'bottom_nav.dart';
 import 'nav_logic.dart';
 import 'drawer.dart';
+import 'review_from_page.dart';
+import 'review_widget.dart';
 
 class DetailPage extends StatefulWidget {
   final String imagePath;
   final String name;
-  final String? description;
+  final String description;
   final double size;
-  final String? reviewedBy;
-  final String? listBy;
-  final String? reviewer;
-  final String? creator;
-  final int? rating;
-  final String? year;
-  final int? number;
-  final String? genre;
-  final String? artist;
-  final int? number_of_reviews;
+  final String reviewedBy;
+  final String listBy;
+  final String reviewer;
+  final String creator;
+  final int rating;
+  final String year;
+  final int number;
+  final String genre;
+  final String artist;
+  final int number_of_reviews;
+  final String imageCreator;
 
   const DetailPage({
     required this.imagePath,
     required this.name,
-    this.description,
+    required this.description,
     required this.size,
-    this.reviewedBy,
-    this.listBy,
-    this.reviewer,
-    this.creator,
-    this.rating,
-    this.year,
-    this.number,
-    this.genre,
-    this.artist,
-    this.number_of_reviews,
+    required this.reviewedBy,
+    required this.listBy,
+    required this.reviewer,
+    required this.creator,
+    required this.rating,
+    required this.year,
+    required this.number,
+    required this.genre,
+    required this.artist,
+    required this.number_of_reviews,
+    required this.imageCreator,
     Key? key,
   }) : super(key: key);
 
@@ -57,84 +62,73 @@ class _DetailPageState extends State<DetailPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Name
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
-              child: Text(
-                widget.name,
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
-              ),
+            // Title in bold and centered above the image
+            DetailPageWidget(
+              imagePath: widget.imagePath,
+              name: widget.name,
+              description: widget.description,
+              size: widget.size,
+              reviewedBy: widget.reviewedBy,
+              listBy: widget.listBy,
+              reviewer: widget.reviewer,
+              creator: widget.creator,
+              rating: widget.rating,
+              year: widget.year,
+              number: widget.number,
+              genre: widget.genre,
+              artist: widget.artist,
+              number_of_reviews: widget.number_of_reviews,
+              imageCreator: widget.imageCreator,
             ),
-
-            // Artist
-            if (widget.artist != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 4.0, bottom: 8.0),
-                child: Text(
-                  "by ${widget.artist}",
-                  style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
-                  textAlign: TextAlign.center,
+            Center(
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  minimumSize: MaterialStateProperty.all(Size(150, 50)),
+                  foregroundColor: MaterialStateProperty.all(Colors.black), // Text color
                 ),
-              ),
-
-            // Image
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: SizedBox(
-                  height: 250,
-                  child: Image.asset(
-                    widget.imagePath,
-                    width: double.infinity,
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              ),
-            ),
-
-            // Info Section
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Release Type: Album", style: TextStyle(fontSize: 18)),
-                  if (widget.year != null)
-                    Text("Release Date: ${widget.year}", style: TextStyle(fontSize: 18)),
-                  if (widget.genre != null)
-                    Text("Genres: ${widget.genre}", style: TextStyle(fontSize: 18)),
-                  if (widget.rating != null)
-                    Row(
-                      children: [
-                        Text("Average Rating: ", style: TextStyle(fontSize: 18)),
-                        ...List.generate(5, (index) {
-                          return Icon(
-                            index < widget.rating! ? Icons.star : Icons.star_border,
-                            color: Colors.amber,
-                            size: 18,
-                          );
-                        }),
-                      ],
+                onPressed: () {
+                  // Create a map with the necessary data to pass to the ReviewDisplayPage
+                  Map<String, dynamic> reviewData = {
+                    'title': widget.name,
+                    'image': widget.imagePath,
+                    'description': widget.description,
+                    'rating': widget.rating,
+                    'year': widget.year,
+                    'genre': widget.genre,
+                    'artist': widget.artist,
+                    'number_of_reviews': widget.number_of_reviews,
+                    'reviewedBy': widget.reviewedBy,
+                    'reviewer': widget.reviewer,
+                    'createdBy' : widget.listBy,
+                    'creator' : widget.creator,
+                    'imageCreator' : widget.imageCreator,
+                    'number' : widget.number,
+                  };
+                  print(reviewData);
+                  // Navigate to ReviewDisplayPage and pass the reviewData
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ReviewDisplayPage(review: reviewData),
                     ),
-                  SizedBox(height: 10),
-                  if (widget.number_of_reviews != null)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Text("${widget.number_of_reviews} Reviews", style: TextStyle(fontSize: 20)),
-                    ),
-                ],
+                  );
+                },
+                child: Text('Add Review'),
               ),
             ),
-
             // Feed Section
+            if (widget.number_of_reviews != null) ...[
+              SizedBox(height: 20),
+              Align(
+                alignment: Alignment.centerLeft,
+                // Left-align the reviews text
+                child: Text("${widget.number_of_reviews} Reviews",
+                    style: TextStyle(fontSize: 20)),
+              ),
+            ],
             SizedBox(
               height: 400,
-              child: FeedPage(users: users, a:1),
+              child: FeedPage(users: users, a: 1),
             ),
           ],
         ),
@@ -151,4 +145,3 @@ class _DetailPageState extends State<DetailPage> {
     );
   }
 }
-

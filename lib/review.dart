@@ -4,8 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:untitled3/album_widget.dart';
 import 'star_rating.dart';
 import 'dart:io';
-import 'package:image_picker/image_picker.dart';
 import 'list_tab_widget.dart';
+import 'review_screen.dart';
 void main() {
   runApp(MyApp());
 }
@@ -136,51 +136,11 @@ class _SearchWidgetPageState extends State<SearchWidgetPage> {
                     ),
                   ],
                   SizedBox(height: 20),
-                  if (_selectedReview != null) ...[
-                    CustomInfoCard(
-                      imagePath: _selectedReview!['image']!,
-                      name: _selectedReview!['title']!,
-                      description: _selectedReview!['description']!,
-                      size: 200,
-                      reviewedBy: _selectedReview!['reviewedBy']!,
-                      listBy: _selectedReview!['createdBy']!,
-                      reviewer: _selectedReview!['reviewer']!,
-                      creator: _selectedReview!['creator']!,
-                      rating: _selectedReview!['rating']!,
-                      year: _selectedReview!['year']!,
-                      number: _selectedReview!['number']!,
-                      genre: _selectedReview!['genre']!,
-                      artist: _selectedReview!['artist']!,
-                      number_of_reviews: _selectedReview!['number_of_reviews']!,
-                      review: 0,
-                      activity: 0,
-                      detail: 1,
-                      list: 0,
-                      charts: 0,
-                      outside: 0,
-                      imageCreator: _selectedReview!['imageCreator']!,
-                      remove: 0,
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Text(
-                          'Rating:   ',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        StarRating(),
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    TextField(
+                  if (_selectedReview != null)
+                    ReviewDisplay(
+                      review: _selectedReview!,
                       controller: _textController,
-                      maxLines: 10,
-                      decoration: InputDecoration(
-                        labelText: 'Write your review...',
-                        border: OutlineInputBorder(),
-                      ),
                     ),
-                  ],
                 ],
               ),
             ),

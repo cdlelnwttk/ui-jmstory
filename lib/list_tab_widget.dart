@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
-import 'dart:io';
 import 'album_widget.dart';
 
 class ListTabWidget extends StatefulWidget {
   final List<Map<String, dynamic>> reviews;
+  final String? listName;
+  final String? description;
+  final String? imagePath;
+  final List<Map<String, dynamic>>? initialFeed;
 
-  const ListTabWidget({Key? key, required this.reviews}) : super(key: key);
+  const ListTabWidget({
+    Key? key,
+    required this.reviews,
+    this.listName,
+    this.description,
+    this.imagePath,
+    this.initialFeed,
+  }) : super(key: key);
 
   @override
   _ListTabWidgetState createState() => _ListTabWidgetState();
@@ -15,15 +25,33 @@ class _ListTabWidgetState extends State<ListTabWidget> {
   final TextEditingController _searchController = TextEditingController();
   final TextEditingController _listNameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+
   List<Map<String, dynamic>> _filteredData = [];
-  bool _showSuggestions = false;
+  List<Map<String, dynamic>> _feed = [];
   Map<String, dynamic>? _selectedItem;
-  List<Map<String, dynamic>> _feed = []; // To store the selected items
+
+  bool _showSuggestions = false;
+  bool _showSearchView = false;  // This controls which part of the screen is shown
+  late String _imagePath;
 
   @override
   void initState() {
     super.initState();
     _filteredData = List.from(widget.reviews);
+    _listNameController.text = widget.listName ?? '';
+    _descriptionController.text = widget.description ?? '';
+    _feed = List.from(widget.initialFeed ?? []);
+    _imagePath = widget.imagePath ?? 'assets/space.jpg';
+  }
+
+  void _search(String query) {
+    setState(() {
+      _filteredData = widget.reviews
+          .where((item) =>
+          item['title']!.toString().toLowerCase().contains(query.toLowerCase()))
+          .toList();
+      _showSuggestions = query.isNotEmpty && _filteredData.isNotEmpty;
+    });
   }
 
   void _clearSelectedItem() {
@@ -33,15 +61,15 @@ class _ListTabWidgetState extends State<ListTabWidget> {
     });
   }
 
-  void _search(String query) {
+  void _addToFeed(Map<String, dynamic> item) {
     setState(() {
-      _filteredData = widget.reviews
-          .where((item) => item['title']!
-          .toString()
-          .toLowerCase()
-          .contains(query.toLowerCase()))
-          .toList();
-      _showSuggestions = query.isNotEmpty && _filteredData.isNotEmpty;
+      _feed.add(item);
+    });
+  }
+
+  void _toggleSearchView() {
+    setState(() {
+      _showSearchView = !_showSearchView;
     });
   }
 
@@ -53,12 +81,6 @@ class _ListTabWidgetState extends State<ListTabWidget> {
     super.dispose();
   }
 
-  void _addToFeed(Map<String, dynamic> item) {
-    setState(() {
-      _feed.add(item); // This adds the item to the feed list
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -67,141 +89,174 @@ class _ListTabWidgetState extends State<ListTabWidget> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Text box for "List Name"
-            TextField(
-              controller: _listNameController,
-              decoration: InputDecoration(
-                labelText: 'List Name',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            SizedBox(height: 16),
-
-            // Image with a pencil icon centered using Row with MainAxisAlignment.center
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center, // This centers the contents of the Row
-              children: [
-                Image.asset(
-                  'assets/space.jpg', // Your pencil image path
-                  width: 250,
-                  height: 250,
+            // If not in search view, show initial details (list name, image, description)
+            if (!_showSearchView) ...[
+              TextField(
+                controller: _listNameController,
+                decoration: InputDecoration(
+                  labelText: 'List Name',
+                  border: OutlineInputBorder(),
                 ),
-              ],
-            ),
+              ),
+              SizedBox(height: 16),
+
+              // Image
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    _imagePath,
+                    width: 300,
+                    height: 300,
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      // Add logic to change _imagePath via file picker or camera
+                    },
+                    child: Text("Update List Picture"),
+                  ),
+                ],
+              ),
+              SizedBox(height: 16),
+
+              // Description
+              TextField(
+                controller: _descriptionController,
+                decoration: InputDecoration(
+                  labelText: 'Description',
+                  border: OutlineInputBorder(),
+                ),
+                maxLines: null,
+                minLines: 2,
+              ),
+              SizedBox(height: 16),
+            ],
+
+            // Row with buttons for both "Update List Picture" and "Go to Search"
             Row(
-              mainAxisAlignment: MainAxisAlignment.center, // This centers the contents of the Row
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                // Update List Picture Button
                 ElevatedButton(
                   onPressed: () {
+                    // Add logic to change _imagePath via file picker or camera
                   },
                   child: Text("Update List Picture"),
                 ),
+                SizedBox(width: 16),  // Space between buttons
+                // Go to Search Button (Arrow pointing right)
+                ElevatedButton(
+                  onPressed: _toggleSearchView,
+                  style: ElevatedButton.styleFrom(
+                    shape: CircleBorder(),
+                    padding: EdgeInsets.all(10),
+                  ),
+                  child: Icon(
+                    _showSearchView ? Icons.arrow_forward : Icons.arrow_forward,
+                    size: 30,
+                  ),
+                ),
               ],
             ),
             SizedBox(height: 16),
 
-            // Edit List Picture Button
-            // Text box for "Description"
-            TextField(
-              controller: _descriptionController,
-              decoration: InputDecoration(
-                labelText: 'Description',
-                border: OutlineInputBorder(),
-              ),
-              maxLines: null,  // This allows the TextField to expand vertically
-              minLines: 2,     // Optional: sets the minimum number of lines
-            ),
-            SizedBox(height: 16),
-
-            // Search bar
-            TextField(
-              controller: _searchController,
-              onChanged: _search,
-              decoration: InputDecoration(
-                labelText: 'Search Releases to Add',
-                border: OutlineInputBorder(),
-                suffixIcon: Icon(Icons.search),
-              ),
-            ),
-            SizedBox(height: 16),
-
-            // Search result suggestions (only visible when valid search is performed)
-            if (_showSuggestions && _filteredData.isNotEmpty)
-              ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: _filteredData.length,
-                itemBuilder: (context, index) {
-                  var item = _filteredData[index];
-                  return ListTile(
-                    title: Text(item['title']),
-                    onTap: () {
-                      setState(() {
-                        _selectedItem = item;
-                        _searchController.text = item['title'];
-                        _showSuggestions = false;
-                      });
-                    },
-                  );
-                },
-              ),
-
-            // Display card only if a valid item was selected
-            if (_selectedItem != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: Column(
-                  children: [
-                    Stack(
-                      children: [
-                        CustomInfoCard(
-                          imagePath: _selectedItem!['image'],
-                          name: _selectedItem!['title'],
-                          description: _selectedItem!['description'],
-                          size: 150,
-                          reviewedBy: _selectedItem!['reviewedBy'],
-                          listBy: _selectedItem!['createdBy'],
-                          reviewer: _selectedItem!['reviewer'],
-                          creator: _selectedItem!['creator'],
-                          rating: _selectedItem!['rating'],
-                          year: _selectedItem!['year'],
-                          number: _selectedItem!['number'],
-                          genre: _selectedItem!['genre'],
-                          artist: _selectedItem!['artist'],
-                          number_of_reviews: _selectedItem!['number_of_reviews'],
-                          review: 0,
-                          activity: 0,
-                          detail: 1,
-                          list: 0,
-                          charts: 0,
-                          outside: 0,
-                          imageCreator: _selectedItem!['imageCreator'],
-                          remove: 0,
-                        ),
-                        Positioned(
-                          top: 0,
-                          right: 0,
-                          child: IconButton(
-                            icon: Icon(Icons.close),
-                            onPressed: _clearSelectedItem,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (_selectedItem != null) {
-                          _addToFeed(_selectedItem!);
-                        }
-                      },
-                      child: Text("Add to list"),
-                    ),
-                  ],
+            // If in search view, show search bar and suggestions
+            if (_showSearchView) ...[
+              // Search bar
+              TextField(
+                controller: _searchController,
+                onChanged: _search,
+                decoration: InputDecoration(
+                  labelText: 'Search Releases to Add',
+                  border: OutlineInputBorder(),
+                  suffixIcon: Icon(Icons.search),
                 ),
               ),
+              SizedBox(height: 16),
 
-            // Display the feed of selected items as CustomInfoCards
+              // Suggestions
+              if (_showSuggestions && _filteredData.isNotEmpty)
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: _filteredData.length,
+                  itemBuilder: (context, index) {
+                    var item = _filteredData[index];
+                    return ListTile(
+                      title: Text(item['title']),
+                      onTap: () {
+                        setState(() {
+                          _selectedItem = item;
+                          _searchController.text = item['title'];
+                          _showSuggestions = false;
+                        });
+                      },
+                    );
+                  },
+                ),
+
+              // Selected Item Card
+              if (_selectedItem != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: Column(
+                    children: [
+                      Stack(
+                        children: [
+                          CustomInfoCard(
+                            imagePath: _selectedItem!['image'],
+                            name: _selectedItem!['title'],
+                            description: _selectedItem!['description'],
+                            size: 150,
+                            reviewedBy: _selectedItem!['reviewedBy'],
+                            listBy: _selectedItem!['createdBy'],
+                            reviewer: _selectedItem!['reviewer'],
+                            creator: _selectedItem!['creator'],
+                            rating: _selectedItem!['rating'],
+                            year: _selectedItem!['year'],
+                            number: _selectedItem!['number'],
+                            genre: _selectedItem!['genre'],
+                            artist: _selectedItem!['artist'],
+                            number_of_reviews: _selectedItem!['number_of_reviews'],
+                            review: 0,
+                            activity: 0,
+                            detail: 1,
+                            list: 0,
+                            charts: 0,
+                            outside: 0,
+                            imageCreator: _selectedItem!['imageCreator'],
+                            remove: 0,
+                          ),
+                          Positioned(
+                            top: 0,
+                            right: 0,
+                            child: IconButton(
+                              icon: Icon(Icons.close),
+                              onPressed: _clearSelectedItem,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      ElevatedButton(
+                        onPressed: () {
+                          if (_selectedItem != null) {
+                            _addToFeed(_selectedItem!);
+                          }
+                        },
+                        child: Text("Add to list"),
+                      ),
+                    ],
+                  ),
+                ),
+            ],
+
+            // Feed (only visible if there are items)
             if (_feed.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
@@ -246,5 +301,7 @@ class _ListTabWidgetState extends State<ListTabWidget> {
     );
   }
 }
+
+
 
 

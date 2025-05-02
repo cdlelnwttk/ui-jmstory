@@ -150,6 +150,7 @@ class _CustomInfoCardState extends State<CustomInfoCard> {
                           genre: widget.genre,
                           artist: widget.artist,
                           number_of_reviews: widget.number_of_reviews,
+                          imageCreator: widget.imageCreator,
                         ),
                       ),
                     );
