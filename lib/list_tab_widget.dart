@@ -32,7 +32,7 @@ class _ListTabWidgetState extends State<ListTabWidget> {
   Map<String, dynamic>? _selectedItem;
   int _selectedIndex = 0;
   bool _showSuggestions = false;
-  bool _showSearchView = false; // This controls which part of the screen is shown
+  bool _showSearchView = false;
   late String _imagePath;
 
   @override
@@ -91,11 +91,9 @@ class _ListTabWidgetState extends State<ListTabWidget> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Row with buttons for both "Update List Picture" and "Go to Search"
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Center the "Update List Items" button above the title text box
                   Center(
                     child: ElevatedButton(
                       onPressed: _toggleSearchView,
@@ -106,7 +104,6 @@ class _ListTabWidgetState extends State<ListTabWidget> {
                 ],
               ),
 
-              // If not in search view, show initial details (list name, image, description)
               if (!_showSearchView) ...[
                 TextField(
                   controller: _listNameController,
@@ -117,7 +114,6 @@ class _ListTabWidgetState extends State<ListTabWidget> {
                 ),
                 SizedBox(height: 16),
 
-                // Image with Icon Overlay
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -143,7 +139,6 @@ class _ListTabWidgetState extends State<ListTabWidget> {
                 ),
                 SizedBox(height: 16),
 
-                // Description
                 TextField(
                   controller: _descriptionController,
                   decoration: InputDecoration(
@@ -156,9 +151,7 @@ class _ListTabWidgetState extends State<ListTabWidget> {
                 SizedBox(height: 16),
               ],
 
-              // If in search view, show search bar and suggestions
               if (_showSearchView) ...[
-                // Search bar
                 TextField(
                   controller: _searchController,
                   onChanged: _search,
@@ -170,7 +163,6 @@ class _ListTabWidgetState extends State<ListTabWidget> {
                 ),
                 SizedBox(height: 16),
 
-                // Suggestions
                 if (_showSuggestions && _filteredData.isNotEmpty)
                   ListView.builder(
                     shrinkWrap: true,
@@ -191,7 +183,6 @@ class _ListTabWidgetState extends State<ListTabWidget> {
                     },
                   ),
 
-                // Selected Item Card
                 if (_selectedItem != null)
                   Padding(
                     padding: const EdgeInsets.only(top: 20.0),
@@ -248,7 +239,6 @@ class _ListTabWidgetState extends State<ListTabWidget> {
                   ),
               ],
 
-              // Displaying the feed items
               if (_feed.isNotEmpty)
                 Padding(
                   padding: const EdgeInsets.only(top: 20.0),

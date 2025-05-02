@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'review_widget.dart'; // Contains CustomRowWidget
-import 'user_feed.dart'; // Contains FeedPage
-import 'package:untitled3/data/user_info_data.dart'; // Your users list
+import 'review_widget.dart';
+import 'user_feed.dart';
+import 'package:untitled3/data/user_info_data.dart';
 import 'bottom_nav.dart';
 import 'nav_logic.dart';
 import 'drawer.dart';
-import 'detail_page.dart'; // Import the DetailPage
+import 'detail_page.dart';
 import 'release_widget.dart';
 class ExtendedReview extends StatefulWidget {
   final String imagePath;
@@ -99,7 +99,7 @@ class _ExtendedReviewState extends State<ExtendedReview> {
           setState(() {
             _selectedIndex = index;
           });
-          handleNavTap(context, index); // use shared nav logic
+          handleNavTap(context, index);
         },
       ),
     );

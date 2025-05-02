@@ -1,6 +1,6 @@
 // feed_page.dart
 import 'package:flutter/material.dart';
-import 'feed_list.dart'; // Import the FeedList widget
+import 'feed_list.dart';
 
 class FeedPage extends StatefulWidget {
   @override
@@ -8,9 +8,8 @@ class FeedPage extends StatefulWidget {
 }
 
 class _FeedPageState extends State<FeedPage> {
-  List<Map<String, dynamic>> _items = []; // Hold the list of items
+  List<Map<String, dynamic>> _items = [];
 
-  // Example values for a, b, c, d, f, j
   final int a = 0;
   final int b = 0;
   final int c = 0;

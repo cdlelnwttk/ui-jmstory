@@ -148,7 +148,6 @@ class _SearchWidgetPageState extends State<SearchWidgetPage> {
               ),
             ),
 
-            // --- List Tab ---
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: ListTabWidget(reviews: _reviews),

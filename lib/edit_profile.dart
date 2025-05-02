@@ -25,13 +25,6 @@ final List<String> albumImages = [
   'assets/youdpreferanastronaut.png',
 ];
 
-final List<String> singleImages = [
-  'assets/single1.jpg', // Replace with your own images
-  'assets/single2.jpg',
-  'assets/single3.jpg',
-  'assets/single4.jpg',
-];
-
 class _EditProfilePageState extends State<EditProfilePage> {
   TextEditingController _displayNameController = TextEditingController();
   TextEditingController _bioController = TextEditingController();
@@ -63,7 +56,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Cover Image with Circular Profile on top
               Stack(
                 children: [
                   Container(
@@ -76,8 +68,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     ),
                   ),
                   Positioned(
-                    top: 115, // Adjust this value to control vertical positioning
-                    left: 16, // Adjust this value for horizontal positioning
+                    top: 115,
+                    left: 16,
                     child: CircleAvatar(
                       radius: 40,
                       backgroundImage: AssetImage('assets/red.jpg'),
@@ -98,13 +90,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
               SizedBox(height: 20),
 
-              // Favorite Albums Section
               Text(
                 'Favorite Singles',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 10),
-              // Wrap to create two rows of images for albums
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: List.generate(2, (index) {
@@ -135,13 +125,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
               SizedBox(height: 20),
 
-              // Favorite Singles Section
               Text(
                 'Favorite Albums',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 10),
-              // Wrap to create two rows of images for singles
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: List.generate(2, (index) {

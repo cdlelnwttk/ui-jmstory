@@ -217,12 +217,11 @@ class _SearchPageState extends State<SearchPage> {
               ],
             ),
 
-            // Dropdown suggestion overlay
             if (_showSuggestions && _filteredData.isNotEmpty)
               Positioned(
                 left: 16,
                 right: 16,
-                top: 90, // Adjust depending on your UI
+                top: 90,
                 child: Material(
                   elevation: 4,
                   borderRadius: BorderRadius.circular(8),

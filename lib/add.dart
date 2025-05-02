@@ -23,7 +23,6 @@ class _SearchWidgetPageState extends State<SearchWidgetPage> {
   final TextEditingController _searchController = TextEditingController();
   final TextEditingController _textBoxController = TextEditingController();
 
-  // Sample data with titles and additional info
   final List<Map<String, String>> _data = [
     {'title': 'Flutter Tutorial', 'description': 'Learn Flutter step by step'},
     {'title': 'Dart Basics', 'description': 'Introduction to Dart programming'},
@@ -44,7 +43,6 @@ class _SearchWidgetPageState extends State<SearchWidgetPage> {
     });
   }
 
-  // Method to handle selection of a title
   void _selectItem(Map<String, String> item) {
     setState(() {
       _selectedItem = item;

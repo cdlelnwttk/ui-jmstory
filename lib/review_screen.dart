@@ -18,7 +18,7 @@ class ReviewDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(8.0), // Adds padding around the entire content
+        padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [

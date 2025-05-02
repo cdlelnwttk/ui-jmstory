@@ -1,6 +1,6 @@
 // feed_list.dart
 import 'package:flutter/material.dart';
-import 'album_widget.dart'; // Import the widget for displaying each item
+import 'album_widget.dart';
 
 class FeedList extends StatelessWidget {
   final List<Map<String, dynamic>> items;
@@ -33,7 +33,6 @@ class FeedList extends StatelessWidget {
       itemBuilder: (context, index) {
         final item = items[index];
 
-        // Check if rating exists and pass it, or pass null if it doesn't
         final size = item['size'] != null ? item['size'] as double : 150.0;
         return CustomInfoCard(
           imagePath: item['image']  ?? '',

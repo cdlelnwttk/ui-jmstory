@@ -6,7 +6,7 @@ class AlbumPage extends StatelessWidget {
   final int year;
   final String genre;
   final String imageUrl;
-  final List<String> reviews; // simple list of review strings
+  final List<String> reviews;
 
   const AlbumPage({
     super.key,

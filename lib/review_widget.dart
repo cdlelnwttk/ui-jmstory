@@ -25,7 +25,6 @@ class CustomRowWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Row containing image, textbox content (centered vertically), and rating (aligned to top-right)
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -42,13 +41,11 @@ class CustomRowWidget extends StatelessWidget {
               ),
             ),
 
-            // Expanded middle and right content
             Expanded(
               child: SizedBox(
                 height: imageHeight,
                 child: Stack(
                   children: [
-                    // Text in middle vertically
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Padding(
@@ -85,7 +82,6 @@ class CustomRowWidget extends StatelessWidget {
             ),
           ],
         ),
-        // Bottom text aligned with start of image
           SizedBox(height: 15.0),
         if (review == 1)
            Text(

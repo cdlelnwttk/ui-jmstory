@@ -1,4 +1,4 @@
-import 'album_page.dart'; // Import your detail page if needed
+import 'album_page.dart';
 
 class Album {
   final String imagePath;

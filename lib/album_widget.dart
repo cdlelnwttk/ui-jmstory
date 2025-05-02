@@ -26,7 +26,7 @@ class CustomInfoCard extends StatefulWidget {
   final int outside;
   final String imageCreator;
   final int remove;
-  final bool isListPage;  // Change to a boolean flag
+  final bool isListPage;
 
   const CustomInfoCard({
     required this.imagePath,
@@ -51,7 +51,7 @@ class CustomInfoCard extends StatefulWidget {
     required this.outside,
     required this.imageCreator,
     required this.remove,
-    required this.isListPage,  // Include the boolean flag
+    required this.isListPage,
     Key? key,
   }) : super(key: key);
 
@@ -110,7 +110,7 @@ class _CustomInfoCardState extends State<CustomInfoCard> {
             children: [
               GestureDetector(
                 onTap: () {
-                  if (widget.list == 1) {  // Check the boolean flag
+                  if (widget.list == 1) {
                     Navigator.push(
                       context,
                       MaterialPageRoute(

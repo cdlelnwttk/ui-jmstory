@@ -1,11 +1,10 @@
-import 'review_widget.dart';  // Assuming CustomRowWidget is inside this file
+import 'review_widget.dart';
 import 'package:flutter/material.dart';
 
 class FeedPage extends StatelessWidget {
   final List<Map<String, dynamic>> users;
   final int a;
 
-  // Constructor to accept the list of users
   const FeedPage({Key? key, required this.users, required this.a}) : super(key: key);
 
   @override

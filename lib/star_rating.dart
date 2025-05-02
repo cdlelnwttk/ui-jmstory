@@ -7,10 +7,8 @@ class StarRating extends StatefulWidget {
 }
 
 class _StarRatingState extends State<StarRating> {
-  // Store the number of filled stars (1 to 5)
   int _filledStars = 0;
 
-  // Function to update the number of filled stars
   void _onStarTapped(int index) {
     setState(() {
       _filledStars = index + 1;

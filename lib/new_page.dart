@@ -5,7 +5,7 @@ import 'package:untitled3/data/release_card_data.dart';
 import 'bottom_nav.dart';
 import 'main.dart';
 import 'nav_logic.dart';
-import 'review_widget.dart'; // Import the file containing CustomRowWidget
+import 'review_widget.dart';
 import 'user_feed.dart';
 import 'package:untitled3/data/user_info_data.dart';
 import 'drawer.dart';
@@ -232,7 +232,7 @@ class _NewPageState extends State<NewPage> with SingleTickerProviderStateMixin {
           setState(() {
             _selectedIndex = index;
           });
-          handleNavTap(context, index); // use shared nav logic
+          handleNavTap(context, index);
         },
       ),
     );

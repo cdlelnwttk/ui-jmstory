@@ -42,7 +42,6 @@ class DetailPageWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        // Title in bold and centered above the image
         GestureDetector(
           onTap: () {
             Navigator.push(
@@ -80,7 +79,6 @@ class DetailPageWidget extends StatelessWidget {
             ),
           ),
         ),
-        // Image Section
         GestureDetector(
           onTap: () {
             Navigator.push(
@@ -127,7 +125,6 @@ class DetailPageWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Name and other information
               SizedBox(height: 5),
               Text("Artist: $artist", style: TextStyle(fontSize: 18)),
               SizedBox(height: 5),

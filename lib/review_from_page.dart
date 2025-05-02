@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'review_screen.dart'; // Your widget file
+import 'review_screen.dart';
 
 class ReviewDisplayPage extends StatelessWidget {
   final Map<String, dynamic> review;

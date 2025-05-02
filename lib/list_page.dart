@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'review_widget.dart'; // Contains CustomRowWidget
-import 'user_feed.dart'; // Contains FeedPage
-import 'package:untitled3/data/user_info_data.dart'; // Your users list
+import 'review_widget.dart';
+import 'user_feed.dart';
+import 'package:untitled3/data/user_info_data.dart';
 import 'package:untitled3/data/release_card_data.dart';
 import 'feed.dart';
 import 'bottom_nav.dart';
 import 'nav_logic.dart';
 import 'drawer.dart';
 import 'feed_list.dart';
-import 'list_tab_widget.dart'; // Import the page you're navigating to
+import 'list_tab_widget.dart';
 import 'edit_list.dart';
 
 class ListPage extends StatefulWidget {
@@ -26,7 +26,7 @@ class ListPage extends StatefulWidget {
   final String genre;
   final String artist;
   final int number_of_reviews;
-  final bool fromProfilePage; // Added this parameter
+  final bool fromProfilePage;
 
   const ListPage({
     required this.imagePath,
@@ -43,7 +43,7 @@ class ListPage extends StatefulWidget {
     required this.genre,
     required this.artist,
     required this.number_of_reviews,
-    required this.fromProfilePage, // Added this parameter
+    required this.fromProfilePage,
     Key? key,
   }) : super(key: key);
 
@@ -108,7 +108,6 @@ class _ListPageState extends State<ListPage> {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 12),
-                  // Conditionally show the "Edit List" button based on fromProfilePage
                   if (widget.fromProfilePage)
                     ElevatedButton(
                       onPressed: () {

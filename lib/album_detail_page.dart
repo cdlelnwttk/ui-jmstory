@@ -18,7 +18,6 @@ class MyApp extends StatelessWidget {
 }
 
 class AlbumDetailPage extends StatelessWidget {
-  // Sample data for the album details and reviews
   final album = {
     'cover': 'assets/images/album_one.jpg',
     'title': 'Album One',

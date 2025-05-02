@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-// This page displays the list of items.
 class ListPage extends StatelessWidget {
   final List<String> items = [
     'Album 1',
@@ -41,7 +40,6 @@ class ListPage extends StatelessWidget {
   }
 }
 
-// This page displays the details of a selected item.
 class ItemDetailPage extends StatelessWidget {
   final String itemName;
 

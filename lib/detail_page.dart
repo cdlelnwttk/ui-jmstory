@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:untitled3/release_widget.dart';
-import 'review_widget.dart'; // Contains CustomRowWidget
-import 'user_feed.dart'; // Contains FeedPage
-import 'package:untitled3/data/user_info_data.dart'; // Your users list
+import 'review_widget.dart';
+import 'user_feed.dart';
+import 'package:untitled3/data/user_info_data.dart';
 import 'bottom_nav.dart';
 import 'nav_logic.dart';
 import 'drawer.dart';

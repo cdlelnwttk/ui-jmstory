@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'new_page.dart'; // Import the new page
+import 'new_page.dart';
 import 'album_widget.dart';
 import 'package:untitled3/data/release_card_data.dart';
 import 'bottom_nav.dart';
 import 'feed.dart';
 import 'charts.dart';
 import 'search.dart';
-import 'review_widget.dart'; // Import the file containing CustomRowWidget
+import 'review_widget.dart';
 import 'user_feed.dart';
 import 'package:untitled3/data/user_info_data.dart';
 import 'drawer.dart';
@@ -41,11 +41,11 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _selectedIndex = index;
     });
-    if (index == 4) {  // Profile tab is at index 4
+    if (index == 4) {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => NewPage(initialTabIndex: 0),  // Navigate to ProfilePage
+          builder: (context) => NewPage(initialTabIndex: 0),
         ),
       );
     }
@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ChartsPage(),  // Navigate to ProfilePage
+          builder: (context) => ChartsPage(),
         ),
       );
     }
@@ -126,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
           setState(() {
             _selectedIndex = index;
           });
-          handleNavTap(context, index); // use shared nav logic
+          handleNavTap(context, index);
         },
       ),
     );
