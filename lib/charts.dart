@@ -5,11 +5,14 @@ import 'bottom_nav.dart';
 import 'nav_logic.dart';
 import 'drawer.dart';
 import 'feed_list.dart';
+
 class ChartsPage extends StatefulWidget {
   @override
   _ChartsPageState createState() => _ChartsPageState();
 }
+
 int _selectedIndex = 0;
+
 class _ChartsPageState extends State<ChartsPage> {
   String selectedType = 'Album';
   String selectedYear = '2024';
@@ -19,6 +22,9 @@ class _ChartsPageState extends State<ChartsPage> {
   final List<String> years = ['2024', '2023', '2022'];
   final List<String> qualifer = ['Top Rated', 'Most Popular'];
   final List<String> release_type = ['Albums', 'Singles'];
+
+  final TextEditingController _textController = TextEditingController();
+  final List<String> userEntries = [];
 
   List<Map<String, String>> feedItems = [
     {'title': 'Album One', 'artist': 'Artist A'},
@@ -30,26 +36,21 @@ class _ChartsPageState extends State<ChartsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-      ),
+      appBar: AppBar(),
       drawer: CustomDrawer(),
-      backgroundColor: Colors.white,
       body: Column(
         children: [
           Container(
             padding: EdgeInsets.all(16),
-            color: Colors.white,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
                     Container(
-                      color: Colors.white,
                       padding: EdgeInsets.symmetric(horizontal: 8),
                       child: DropdownButton<String>(
                         value: selectedQualifer,
-                        dropdownColor: Colors.white,
                         onChanged: (value) {
                           setState(() {
                             selectedQualifer = value!;
@@ -65,11 +66,9 @@ class _ChartsPageState extends State<ChartsPage> {
                     ),
                     SizedBox(width: 15),
                     Container(
-                      color: Colors.white,
                       padding: EdgeInsets.symmetric(horizontal: 8),
                       child: DropdownButton<String>(
                         value: selectedReleaseType,
-                        dropdownColor: Colors.white,
                         onChanged: (value) {
                           setState(() {
                             selectedReleaseType = value!;
@@ -87,11 +86,9 @@ class _ChartsPageState extends State<ChartsPage> {
                     Text("of", style: TextStyle(fontSize: 16)),
                     SizedBox(width: 15),
                     Container(
-                      color: Colors.white,
                       padding: EdgeInsets.symmetric(horizontal: 8),
                       child: DropdownButton<String>(
                         value: selectedYear,
-                        dropdownColor: Colors.white,
                         onChanged: (value) {
                           setState(() {
                             selectedYear = value!;
@@ -107,11 +104,52 @@ class _ChartsPageState extends State<ChartsPage> {
                     ),
                   ],
                 ),
+                SizedBox(height: 20),
+                TextField(
+                  controller: _textController,
+                  onSubmitted: (value) {
+                    if (value.trim().isNotEmpty) {
+                      setState(() {
+                        userEntries.add(value.trim());
+                        _textController.clear();
+                      });
+                    }
+                  },
+                  decoration: InputDecoration(
+                    labelText: 'Enter Genres to Include',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                SizedBox(height: 10),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: userEntries.map((entry) {
+                    return ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        foregroundColor: Colors.white,
+                      ),
+                      child: Text(entry),
+                    );
+                  }).toList(),
+                ),
               ],
             ),
           ),
           Expanded(
-            child: FeedList(items: reviews, a: 0, b: 0, c:0, d:1, f:1, j: 0, remove: 0, fromProfile: false),
+            child: FeedList(
+              items: reviews,
+              a: 0,
+              b: 0,
+              c: 0,
+              d: 1,
+              f: 1,
+              j: 0,
+              remove: 0,
+              fromProfile: false,
+            ),
           ),
         ],
       ),

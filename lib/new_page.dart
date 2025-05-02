@@ -103,7 +103,7 @@ class _NewPageState extends State<NewPage> with SingleTickerProviderStateMixin {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'Username',
+                      'example_display_name',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -111,7 +111,7 @@ class _NewPageState extends State<NewPage> with SingleTickerProviderStateMixin {
                       ),
                     ),
                     Text(
-                      'user@example.com',
+                      'example_user_name',
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.black,
@@ -217,9 +217,9 @@ class _NewPageState extends State<NewPage> with SingleTickerProviderStateMixin {
                   ),
                 )
 ,
-                FeedList(items: reviews, a: 1, b: 1, c: 0, d: 0, f: 0, j: 0, remove: 0, fromProfile: false),
-                FeedList(items: reviews, a: 1, b: 0, c: 0, d: 0, f: 0, j: 0, remove: 0, fromProfile: false),
-                FeedList(items: reviews, a: 0, b: 0, c: 1, d: 0, f: 0, j: 0, remove: 0, fromProfile: false),
+                FeedList(items: reviewsYou, a: 1, b: 1, c: 0, d: 0, f: 0, j: 0, remove: 0, fromProfile: false),
+                FeedList(items: reviewsYou, a: 1, b: 0, c: 0, d: 0, f: 0, j: 0, remove: 0, fromProfile: false),
+                FeedList(items: listsYou, a: 0, b: 0, c: 1, d: 0, f: 0, j: 0, remove: 0, fromProfile: false),
                 FeedPage(users: users,  a: 0),
               ],
             ),

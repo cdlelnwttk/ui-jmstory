@@ -62,7 +62,6 @@ class _DetailPageState extends State<DetailPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Title in bold and centered above the image
             DetailPageWidget(
               imagePath: widget.imagePath,
               name: widget.name,
@@ -84,10 +83,8 @@ class _DetailPageState extends State<DetailPage> {
               child: ElevatedButton(
                 style: ButtonStyle(
                   minimumSize: MaterialStateProperty.all(Size(150, 50)),
-                  foregroundColor: MaterialStateProperty.all(Colors.black), // Text color
                 ),
                 onPressed: () {
-                  // Create a map with the necessary data to pass to the ReviewDisplayPage
                   Map<String, dynamic> reviewData = {
                     'title': widget.name,
                     'image': widget.imagePath,
@@ -99,37 +96,60 @@ class _DetailPageState extends State<DetailPage> {
                     'number_of_reviews': widget.number_of_reviews,
                     'reviewedBy': widget.reviewedBy,
                     'reviewer': widget.reviewer,
-                    'createdBy' : widget.listBy,
-                    'creator' : widget.creator,
-                    'imageCreator' : widget.imageCreator,
-                    'number' : widget.number,
+                    'createdBy': widget.listBy,
+                    'creator': widget.creator,
+                    'imageCreator': widget.imageCreator,
+                    'number': widget.number,
                   };
-                  print(reviewData);
-                  // Navigate to ReviewDisplayPage and pass the reviewData
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ReviewDisplayPage(review: reviewData),
+                      builder: (context) =>
+                          ReviewDisplayPage(review: reviewData),
                     ),
                   );
                 },
                 child: Text('Add Review'),
               ),
             ),
-            // Feed Section
             if (widget.number_of_reviews != null) ...[
-              SizedBox(height: 20),
+              SizedBox(height: 30),
               Align(
                 alignment: Alignment.centerLeft,
-                // Left-align the reviews text
-                child: Text("${widget.number_of_reviews} Reviews",
-                    style: TextStyle(fontSize: 20)),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Text(
+                    "${widget.number_of_reviews} Reviews",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+              ),
+              SizedBox(height: 10),
+              DefaultTabController(
+                length: 2,
+                child: Column(
+                  children: [
+                    TabBar(
+                      labelColor: Theme.of(context).primaryColor,
+                      unselectedLabelColor: Colors.grey,
+                      tabs: [
+                        Tab(text: "Top Reviews"),
+                        Tab(text: "Friends' Reviews"),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 400,
+                      child: TabBarView(
+                        children: [
+                          FeedPage(users: users, a: 1),
+                          FeedPage(users: users, a: 1),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
-            SizedBox(
-              height: 400,
-              child: FeedPage(users: users, a: 1),
-            ),
           ],
         ),
       ),
@@ -139,7 +159,7 @@ class _DetailPageState extends State<DetailPage> {
           setState(() {
             _selectedIndex = index;
           });
-          handleNavTap(context, index); // use shared nav logic
+          handleNavTap(context, index);
         },
       ),
     );

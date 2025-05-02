@@ -91,6 +91,21 @@ class _ListTabWidgetState extends State<ListTabWidget> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Row with buttons for both "Update List Picture" and "Go to Search"
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Center the "Update List Items" button above the title text box
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: _toggleSearchView,
+                      child: Text(_showSearchView ? "Update List Details" : "Update List Items"),
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                ],
+              ),
+
               // If not in search view, show initial details (list name, image, description)
               if (!_showSearchView) ...[
                 TextField(
@@ -140,21 +155,6 @@ class _ListTabWidgetState extends State<ListTabWidget> {
                 ),
                 SizedBox(height: 16),
               ],
-
-              // Row with buttons for both "Update List Picture" and "Go to Search"
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Center the "Update List Items" button above the title text box
-                  Center(
-                    child: ElevatedButton(
-                      onPressed: _toggleSearchView,
-                      child: Text(_showSearchView ? "Update List Details" : "Update List Items"),
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                ],
-              ),
 
               // If in search view, show search bar and suggestions
               if (_showSearchView) ...[
@@ -281,9 +281,7 @@ class _ListTabWidgetState extends State<ListTabWidget> {
                             charts: 0,
                             outside: 0,
                             imageCreator: item['imageCreator'],
-                            remove: _showSearchView
-                                ? 1
-                                : 0,
+                            remove: _showSearchView ? 1 : 0,
                             isListPage: false,
                           ),
                         ),

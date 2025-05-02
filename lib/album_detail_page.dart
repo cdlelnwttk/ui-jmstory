@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
 class AlbumDetailPage extends StatelessWidget {
   // Sample data for the album details and reviews
   final album = {
-    'cover': 'assets/images/album_one.jpg', // Replace with your asset path
+    'cover': 'assets/images/album_one.jpg',
     'title': 'Album One',
     'year': '2025',
     'artist': 'Artist Name',
@@ -50,7 +50,7 @@ class AlbumDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(album['title'] as String), // Explicit cast to String
+        title: Text(album['title'] as String),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -58,7 +58,7 @@ class AlbumDetailPage extends StatelessWidget {
           children: [
             // Album cover header
             Image.asset(
-              album['cover'] as String, // Explicit cast to String
+              album['cover'] as String,
               width: double.infinity,
               height: 250,
               fit: BoxFit.cover,
@@ -70,25 +70,25 @@ class AlbumDetailPage extends StatelessWidget {
                 children: [
                   // Album details
                   Text(
-                    'Year: ${album['year'] as String}', // Explicit cast to String
+                    'Year: ${album['year'] as String}',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Artist: ${album['artist'] as String}', // Explicit cast to String
+                    'Artist: ${album['artist'] as String}',
                     style: TextStyle(fontSize: 16),
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Genre: ${album['genre'] as String}', // Explicit cast to String
+                    'Genre: ${album['genre'] as String}',
                     style: TextStyle(fontSize: 16),
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Rating: ${album['rating'] as String}', // Explicit cast to String
+                    'Rating: ${album['rating'] as String}',
                     style: TextStyle(fontSize: 16),
                   ),
-                  Divider(), // Divider between album details and reviews
+                  Divider(),
                   SizedBox(height: 16),
                   // Reviews section
                   Text(

@@ -60,6 +60,11 @@ flutter:
     - assets/withoutasound.jpg
     - assets/mellon.jpg
     - assets/data.json
+    - assets/blue.png
+    - assets/brown.png
+    - assets/green.png
+    - assets/pink.png
+    - assets/yellow.jpeg
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

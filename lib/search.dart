@@ -19,11 +19,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Search and Detail Example',
       theme: ThemeData(
-        primarySwatch: Colors.blue, // Adjust primary theme color here
+        primarySwatch: Colors.blue,
         appBarTheme: AppBarTheme(
-          backgroundColor: Colors.blue, // Adjust the app bar color
+          backgroundColor: Colors.blue,
         ),
-        scaffoldBackgroundColor: Colors.grey[200], // Background color of the body
+        scaffoldBackgroundColor: Colors.grey[200],
       ),
       home: SearchPage(),
     );
@@ -38,15 +38,31 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   final TextEditingController _searchController = TextEditingController();
   final TextEditingController _textController = TextEditingController();
+  final FocusNode _searchFocus = FocusNode();
+
   List<Map<String, dynamic>> _reviews = [];
   List<Map<String, dynamic>> _filteredData = [];
   Map<String, dynamic>? _selectedReview;
   bool _showSuggestions = false;
   int _selectedIndex = 0;
+
   @override
   void initState() {
     super.initState();
     _loadReviews();
+    _searchFocus.addListener(() {
+      if (!_searchFocus.hasFocus) {
+        setState(() {
+          _showSuggestions = false;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchFocus.dispose();
+    super.dispose();
   }
 
   Future<void> _loadReviews() async {
@@ -92,149 +108,140 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3, // Updated the Tab length for 'Releases', 'List', 'Users'
+      length: 3,
       child: Scaffold(
         appBar: AppBar(),
         drawer: CustomDrawer(),
-        body: Column(
+        body: Stack(
           children: [
-            // --- Search Bar ---
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: TextField(
-                controller: _searchController,
-                onChanged: _searchData,
-                onSubmitted: _onSearchSubmit,
-                decoration: InputDecoration(
-                  labelText: 'Search Titles',
-                  border: OutlineInputBorder(),
-                  suffixIcon: Icon(Icons.search),
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: TextField(
+                    focusNode: _searchFocus,
+                    controller: _searchController,
+                    onChanged: _searchData,
+                    onSubmitted: _onSearchSubmit,
+                    decoration: InputDecoration(
+                      labelText: 'Search Titles',
+                      border: OutlineInputBorder(),
+                      suffixIcon: Icon(Icons.search),
+                    ),
+                  ),
                 ),
-              ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: TabBar(
+                    tabs: [
+                      Tab(text: 'Releases'),
+                      Tab(text: 'List'),
+                      Tab(text: 'Users')
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: TabBarView(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (_selectedReview != null) ...[
+                              Text(
+                                "Results:",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              CustomInfoCard(
+                                imagePath: _selectedReview!['image']!,
+                                name: _selectedReview!['title']!,
+                                description: _selectedReview!['description']!,
+                                size: 200,
+                                reviewedBy: _selectedReview!['reviewedBy']!,
+                                listBy: _selectedReview!['createdBy']!,
+                                reviewer: _selectedReview!['reviewer']!,
+                                creator: _selectedReview!['creator']!,
+                                rating: _selectedReview!['rating']!,
+                                year: _selectedReview!['year']!,
+                                number: _selectedReview!['number']!,
+                                genre: _selectedReview!['genre']!,
+                                artist: _selectedReview!['artist']!,
+                                number_of_reviews:
+                                _selectedReview!['number_of_reviews']!,
+                                review: 0,
+                                activity: 0,
+                                detail: 1,
+                                list: 0,
+                                charts: 0,
+                                outside: 0,
+                                imageCreator:
+                                _selectedReview!['imageCreator']!,
+                                remove: 0,
+                                isListPage: false,
+                              ),
+                            ],
+                          ],
+                        ),
+                      ),
+                      if (_selectedReview != null)
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Center(
+                            child: Text(
+                              'No results',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ),
+                        )
+                      else
+                        SizedBox.shrink(),
+                      if (_selectedReview != null)
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Center(
+                            child: Text(
+                              'No results',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ),
+                        )
+                      else
+                        SizedBox.shrink(),
+                    ],
+                  ),
+                ),
+              ],
             ),
-            // --- Suggestions Overlaying the TabBar ---
-            if (_showSuggestions && _filteredData.isNotEmpty) ...[
-              Material(
-                // White background to match the theme
-                elevation: 1.0, // Light shadow
-                borderRadius: BorderRadius.circular(8.0),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                  child: SizedBox(
-                    height: 50.0, // Reduced height for a smaller suggestion box
+
+            // Dropdown suggestion overlay
+            if (_showSuggestions && _filteredData.isNotEmpty)
+              Positioned(
+                left: 16,
+                right: 16,
+                top: 90, // Adjust depending on your UI
+                child: Material(
+                  elevation: 4,
+                  borderRadius: BorderRadius.circular(8),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxHeight: 200),
                     child: ListView.builder(
+                      padding: EdgeInsets.zero,
                       shrinkWrap: true,
                       itemCount: _filteredData.length,
                       itemBuilder: (context, index) {
                         return ListTile(
-                          title: Text(
-                            _filteredData[index]['title']!,
-                            style: TextStyle(
-                              color: Colors.black, // Adjust color of text
-                            ),
-                          ),
-                          onTap: () {
-                            _selectReview(_filteredData[index]);
-                          },
+                          title: Text(_filteredData[index]['title']!),
+                          onTap: () => _selectReview(_filteredData[index]),
                         );
                       },
                     ),
                   ),
                 ),
               ),
-            ],
-            // --- TabBar below the Search Bar ---
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0), // Adjust for spacing
-              child: TabBar(
-                tabs: [
-                  Tab(text: 'Releases'),
-                  Tab(text: 'List'),
-                  Tab(text: 'Users')
-                ],
-              ),
-            ),
-            // --- TabBarView below the TabBar ---
-            Expanded(
-              child: TabBarView(
-                children: [
-                  // --- Review Tab ---
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (_selectedReview != null) ...[
-                          Text(
-                            "Results:",
-                            style: TextStyle(
-                              fontSize: 20, // Change this number to make it bigger or smaller
-                              color: Colors.black, // Optional: change text color
-                            ),
-                          ),
-                          CustomInfoCard(
-                            imagePath: _selectedReview!['image']!,
-                            name: _selectedReview!['title']!,
-                            description: _selectedReview!['description']!,
-                            size: 200,
-                            reviewedBy: _selectedReview!['reviewedBy']!,
-                            listBy: _selectedReview!['createdBy']!,
-                            reviewer: _selectedReview!['reviewer']!,
-                            creator: _selectedReview!['creator']!,
-                            rating: _selectedReview!['rating']!,
-                            year: _selectedReview!['year']!,
-                            number: _selectedReview!['number']!,
-                            genre: _selectedReview!['genre']!,
-                            artist: _selectedReview!['artist']!,
-                            number_of_reviews: _selectedReview!['number_of_reviews']!,
-                            review: 0,
-                            activity: 0,
-                            detail: 1,
-                            list: 0,
-                            charts: 0,
-                            outside: 0,
-                            imageCreator: _selectedReview!['imageCreator']!,
-                            remove: 0,
-                            isListPage: false,
-                          ),
-                        ],
-                      ],
-                    ),
-                  ),
-
-                  // --- List Tab ---
-                  if (_selectedReview != null) ...[
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Center(
-                        child: Text(
-                          'No results',
-                          style: TextStyle(fontSize: 16), // Optional: adjust size
-                        ),
-                      ),
-                    ),
-                  ] else ...[
-
-                  ],
-
-
-                  if (_selectedReview != null) ...[
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Center(
-                        child: Text(
-                          'No results',
-                          style: TextStyle(fontSize: 16), // Optional: adjust size
-                        ),
-                      ),
-                    ),
-                  ] else ...[
-                    // This is the else block
-
-                  ],
-                ],
-              ),
-            ),
           ],
         ),
         bottomNavigationBar: CustomBottomNavBar(
@@ -243,11 +250,10 @@ class _SearchPageState extends State<SearchPage> {
             setState(() {
               _selectedIndex = index;
             });
-            handleNavTap(context, index); // use shared nav logic
+            handleNavTap(context, index);
           },
         ),
       ),
     );
   }
 }
-

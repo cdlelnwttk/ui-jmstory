@@ -32,13 +32,10 @@ class _SearchWidgetPageState extends State<SearchWidgetPage> {
     {'title': 'Flutter Widgets', 'description': 'Understanding Flutter widgets'},
   ];
 
-  // Store filtered results based on search
   List<Map<String, String>> _filteredData = [];
 
-  // Store the currently selected item to display the widget
   Map<String, String>? _selectedItem;
 
-  // Method to filter data based on search query
   void _searchData(String query) {
     setState(() {
       _filteredData = _data

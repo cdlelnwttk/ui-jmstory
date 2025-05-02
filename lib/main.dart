@@ -105,9 +105,9 @@ class _MyHomePageState extends State<MyHomePage> {
               child: TabBarView(
                 children: [
                   FeedList(items: reviews, a: 1, b: 0, c: 0, d: 0, f: 0, j: 0, remove: 0, fromProfile: false),
-                  FeedList(items: reviews, a: 0, b: 0, c: 1, d: 0, f: 0, j: 0, remove: 0, fromProfile: false),
+                  FeedList(items: lists, a: 0, b: 0, c: 1, d: 0, f: 0, j: 0, remove: 0, fromProfile: false),
                   FeedList(items: reviews, a: 1, b: 0, c: 0, d: 0, f: 0, j: 0, remove: 0, fromProfile: false),
-                  FeedList(items: reviews, a: 0, b: 1, c: 0, d: 0, f: 0, j: 0, remove: 0, fromProfile: false),
+                  FeedList(items: lists, a: 0, b: 0, c: 1, d: 0, f: 0, j: 0, remove: 0, fromProfile: false),
                 ],
               ),
             ),
