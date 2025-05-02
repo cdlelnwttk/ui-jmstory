@@ -27,7 +27,7 @@ class _StarRatingState extends State<StarRating> {
           child: Icon(
             Icons.star,
             color: index < _filledStars ? Colors.amber : Colors.grey,
-            size: 30,
+            size: 25,
           ),
         );
       }),

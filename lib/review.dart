@@ -6,6 +6,8 @@ import 'star_rating.dart';
 import 'dart:io';
 import 'list_tab_widget.dart';
 import 'review_screen.dart';
+import 'bottom_nav.dart'; // Make sure this file has CustomBottomNavBar and handleNavTap
+import 'nav_logic.dart';
 void main() {
   runApp(MyApp());
 }
@@ -28,10 +30,13 @@ class SearchWidgetPage extends StatefulWidget {
 class _SearchWidgetPageState extends State<SearchWidgetPage> {
   final TextEditingController _searchController = TextEditingController();
   final TextEditingController _textController = TextEditingController();
+
   List<Map<String, dynamic>> _reviews = [];
   List<Map<String, dynamic>> _filteredData = [];
   Map<String, dynamic>? _selectedReview;
   bool _showSuggestions = false;
+
+  int _selectedIndex = 0; // 👈 Add this to track bottom nav index
 
   @override
   void initState() {
@@ -91,12 +96,11 @@ class _SearchWidgetPageState extends State<SearchWidgetPage> {
               Tab(text: 'List'),
             ],
           ),
-          title: const Text('Edit Profile'),
+          title: const Text('Create'),
           actions: [
             IconButton(
               icon: const Icon(Icons.check),
               onPressed: () {
-                // Save action (for now just print)
                 print('Profile saved');
               },
             ),
@@ -105,37 +109,36 @@ class _SearchWidgetPageState extends State<SearchWidgetPage> {
         body: TabBarView(
           children: [
             // --- Review Tab ---
-            Padding(
+            SingleChildScrollView(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(height: 20),
                   TextField(
                     controller: _searchController,
                     onChanged: _searchData,
                     onSubmitted: _onSearchSubmit,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Search Titles',
                       border: OutlineInputBorder(),
                       suffixIcon: Icon(Icons.search),
                     ),
                   ),
-                  SizedBox(height: 20),
-                  if (_showSuggestions && _filteredData.isNotEmpty) ...[
+                  const SizedBox(height: 10),
+                  if (_showSuggestions && _filteredData.isNotEmpty)
                     ListView.builder(
                       shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: _filteredData.length,
                       itemBuilder: (context, index) {
                         return ListTile(
                           title: Text(_filteredData[index]['title']!),
-                          onTap: () {
-                            _selectReview(_filteredData[index]);
-                          },
+                          onTap: () => _selectReview(_filteredData[index]),
                         );
                       },
                     ),
-                  ],
-                  SizedBox(height: 20),
+                  const SizedBox(height: 10),
                   if (_selectedReview != null)
                     ReviewDisplay(
                       review: _selectedReview!,
@@ -151,6 +154,17 @@ class _SearchWidgetPageState extends State<SearchWidgetPage> {
               child: ListTabWidget(reviews: _reviews),
             ),
           ],
+        ),
+
+        // ✅ Bottom Navigation Bar
+        bottomNavigationBar: CustomBottomNavBar(
+          currentIndex: _selectedIndex,
+          onTap: (index) {
+            setState(() {
+              _selectedIndex = index;
+            });
+            handleNavTap(context, index);
+          },
         ),
       ),
     );

@@ -8,6 +8,7 @@ import 'bottom_nav.dart';
 import 'nav_logic.dart';
 import 'drawer.dart';
 import 'feed_list.dart';
+import 'list_tab_widget.dart'; // Import the page you're navigating to
 
 class ListPage extends StatefulWidget {
   final String imagePath;
@@ -71,15 +72,6 @@ class _ListPageState extends State<ListPage> {
                 textAlign: TextAlign.center,
               ),
             ),
-            if (widget.creator.isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.only(top: 4.0, bottom: 8.0),
-                child: Text(
-                  "curated by ${widget.creator}",
-                  style: const TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
-                  textAlign: TextAlign.center,
-                ),
-              ),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: ClipRRect(
@@ -94,12 +86,60 @@ class _ListPageState extends State<ListPage> {
                 ),
               ),
             ),
+            if (widget.creator.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(top: 4.0, bottom: 8.0),
+                child: Text(
+                  "curated by ${widget.creator}",
+                  style: const TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
+                  textAlign: TextAlign.center,
+                ),
+              ),
             Padding(
               padding: const EdgeInsets.only(top: 4.0, bottom: 8.0),
-              child: Text(
-                widget.description,
-                style: const TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
-                textAlign: TextAlign.center,
+              child: Column(
+                children: [
+                  Text(
+                    widget.description,
+                    style: const TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 12),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ListTabWidget(
+                            reviews: [
+                              {
+                                'imagePath': widget.imagePath,
+                                'name': widget.name,
+                                'description': widget.description,
+                                'size': widget.size,
+                                'reviewedBy': widget.reviewedBy,
+                                'listBy': widget.listBy,
+                                'reviewer': widget.reviewer,
+                                'creator': widget.creator,
+                                'rating': widget.rating,
+                                'year': widget.year,
+                                'number': widget.number,
+                                'genre': widget.genre,
+                                'artist': widget.artist,
+                                'number_of_reviews': widget.number_of_reviews,
+                              }
+                            ],
+                            listName: widget.name,
+                            description: widget.description,
+                            imagePath: widget.imagePath,
+                            initialFeed: reviews, // or some other initial data if appropriate
+                          ),
+                        ),
+                      );
+                    },
+                    child: const Text('Edit List'),
+                  ),
+                ],
               ),
             ),
             SizedBox(
