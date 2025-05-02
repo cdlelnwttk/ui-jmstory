@@ -31,7 +31,7 @@ class _ListTabWidgetState extends State<ListTabWidget> {
   Map<String, dynamic>? _selectedItem;
 
   bool _showSuggestions = false;
-  bool _showSearchView = false;  // This controls which part of the screen is shown
+  bool _showSearchView = false; // This controls which part of the screen is shown
   late String _imagePath;
 
   @override
@@ -100,25 +100,27 @@ class _ListTabWidgetState extends State<ListTabWidget> {
               ),
               SizedBox(height: 16),
 
-              // Image
+              // Image with Icon Overlay
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset(
-                    _imagePath,
-                    width: 300,
-                    height: 300,
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      // Add logic to change _imagePath via file picker or camera
-                    },
-                    child: Text("Update List Picture"),
+                  Stack(
+                    children: [
+                      Image.asset(
+                        _imagePath,
+                        width: 300,
+                        height: 300,
+                      ),
+                      Positioned(
+                        top: 50,
+                        right: 30,
+                        child: Icon(
+                          Icons.edit,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -138,32 +140,21 @@ class _ListTabWidgetState extends State<ListTabWidget> {
             ],
 
             // Row with buttons for both "Update List Picture" and "Go to Search"
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Update List Picture Button
-                ElevatedButton(
-                  onPressed: () {
-                    // Add logic to change _imagePath via file picker or camera
-                  },
-                  child: Text("Update List Picture"),
-                ),
-                SizedBox(width: 16),  // Space between buttons
-                // Go to Search Button (Arrow pointing right)
-                ElevatedButton(
-                  onPressed: _toggleSearchView,
-                  style: ElevatedButton.styleFrom(
-                    shape: CircleBorder(),
-                    padding: EdgeInsets.all(10),
+                // Center the "Update List Items" button above the title text box
+                Center(
+                  child: ElevatedButton(
+                          onPressed: _toggleSearchView,
+                          child: Text(_showSearchView ? "Update List Details" : "Update List Items"),
                   ),
-                  child: Icon(
-                    _showSearchView ? Icons.arrow_forward : Icons.arrow_forward,
-                    size: 30,
-                  ),
+
                 ),
+                SizedBox(height: 16),
+                // Space between the button and title text box
               ],
             ),
-            SizedBox(height: 16),
 
             // If in search view, show search bar and suggestions
             if (_showSearchView) ...[
@@ -256,7 +247,7 @@ class _ListTabWidgetState extends State<ListTabWidget> {
                 ),
             ],
 
-            // Feed (only visible if there are items)
+            // Displaying the feed items
             if (_feed.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
@@ -289,7 +280,9 @@ class _ListTabWidgetState extends State<ListTabWidget> {
                           charts: 0,
                           outside: 0,
                           imageCreator: item['imageCreator'],
-                          remove: 1,
+                          remove: _showSearchView
+                              ? 1
+                              : 0, // Remove is 0 when title, image, and description are visible, 1 when the search bar is visible
                         ),
                       ),
                   ],
@@ -301,7 +294,6 @@ class _ListTabWidgetState extends State<ListTabWidget> {
     );
   }
 }
-
 
 
 
