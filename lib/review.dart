@@ -6,8 +6,9 @@ import 'star_rating.dart';
 import 'dart:io';
 import 'list_tab_widget.dart';
 import 'review_screen.dart';
-import 'bottom_nav.dart'; // Make sure this file has CustomBottomNavBar and handleNavTap
+import 'bottom_nav.dart';
 import 'nav_logic.dart';
+import 'drawer.dart';
 void main() {
   runApp(MyApp());
 }
@@ -36,7 +37,7 @@ class _SearchWidgetPageState extends State<SearchWidgetPage> {
   Map<String, dynamic>? _selectedReview;
   bool _showSuggestions = false;
 
-  int _selectedIndex = 0; // 👈 Add this to track bottom nav index
+  int _selectedIndex = 0;
 
   @override
   void initState() {
@@ -96,19 +97,18 @@ class _SearchWidgetPageState extends State<SearchWidgetPage> {
               Tab(text: 'List'),
             ],
           ),
-          title: const Text('Create'),
           actions: [
             IconButton(
               icon: const Icon(Icons.check),
               onPressed: () {
-                print('Profile saved');
+                Navigator.pop(context);
               },
             ),
           ],
         ),
+        drawer: CustomDrawer(),
         body: TabBarView(
           children: [
-            // --- Review Tab ---
             SingleChildScrollView(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -156,7 +156,6 @@ class _SearchWidgetPageState extends State<SearchWidgetPage> {
           ],
         ),
 
-        // ✅ Bottom Navigation Bar
         bottomNavigationBar: CustomBottomNavBar(
           currentIndex: _selectedIndex,
           onTap: (index) {

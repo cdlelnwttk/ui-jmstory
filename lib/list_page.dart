@@ -9,6 +9,7 @@ import 'nav_logic.dart';
 import 'drawer.dart';
 import 'feed_list.dart';
 import 'list_tab_widget.dart'; // Import the page you're navigating to
+import 'edit_list.dart';
 
 class ListPage extends StatefulWidget {
   final String imagePath;
@@ -25,6 +26,7 @@ class ListPage extends StatefulWidget {
   final String genre;
   final String artist;
   final int number_of_reviews;
+  final bool fromProfilePage; // Added this parameter
 
   const ListPage({
     required this.imagePath,
@@ -41,6 +43,7 @@ class ListPage extends StatefulWidget {
     required this.genre,
     required this.artist,
     required this.number_of_reviews,
+    required this.fromProfilePage, // Added this parameter
     Key? key,
   }) : super(key: key);
 
@@ -62,7 +65,7 @@ class _ListPageState extends State<ListPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
+              padding: const EdgeInsets.only(top: 50.0, left: 16.0, right: 16.0),
               child: Text(
                 widget.name,
                 style: const TextStyle(
@@ -105,46 +108,48 @@ class _ListPageState extends State<ListPage> {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 12),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ListTabWidget(
-                            reviews: [
-                              {
-                                'imagePath': widget.imagePath,
-                                'name': widget.name,
-                                'description': widget.description,
-                                'size': widget.size,
-                                'reviewedBy': widget.reviewedBy,
-                                'listBy': widget.listBy,
-                                'reviewer': widget.reviewer,
-                                'creator': widget.creator,
-                                'rating': widget.rating,
-                                'year': widget.year,
-                                'number': widget.number,
-                                'genre': widget.genre,
-                                'artist': widget.artist,
-                                'number_of_reviews': widget.number_of_reviews,
-                              }
-                            ],
-                            listName: widget.name,
-                            description: widget.description,
-                            imagePath: widget.imagePath,
-                            initialFeed: reviews, // or some other initial data if appropriate
+                  // Conditionally show the "Edit List" button based on fromProfilePage
+                  if (widget.fromProfilePage)
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ListTabPage(
+                              reviews: [
+                                {
+                                  'imagePath': widget.imagePath,
+                                  'name': widget.name,
+                                  'description': widget.description,
+                                  'size': widget.size,
+                                  'reviewedBy': widget.reviewedBy,
+                                  'listBy': widget.listBy,
+                                  'reviewer': widget.reviewer,
+                                  'creator': widget.creator,
+                                  'rating': widget.rating,
+                                  'year': widget.year,
+                                  'number': widget.number,
+                                  'genre': widget.genre,
+                                  'artist': widget.artist,
+                                  'number_of_reviews': widget.number_of_reviews,
+                                }
+                              ],
+                              listName: widget.name,
+                              description: widget.description,
+                              imagePath: widget.imagePath,
+                              initialFeed: reviews,
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                    child: const Text('Edit List'),
-                  ),
+                        );
+                      },
+                      child: const Text('Edit List'),
+                    ),
                 ],
               ),
             ),
             SizedBox(
               height: 500,
-              child: FeedList(items: reviews, a: 0, b: 0, c: 1, d: 1, f: 1, j: 1, remove: 0),
+              child: FeedList(items: reviews, a: 0, b: 0, c: 1, d: 1, f: 1, j: 1, remove: 0,fromProfile: false),
             ),
           ],
         ),

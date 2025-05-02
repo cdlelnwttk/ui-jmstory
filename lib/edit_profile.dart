@@ -52,8 +52,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           IconButton(
             icon: Icon(Icons.check),
             onPressed: () {
-              // Save action (for now just print)
-              print('Profile saved');
+              Navigator.pop(context);
             },
           ),
         ],

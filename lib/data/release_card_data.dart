@@ -81,33 +81,89 @@ final List<Map<String, dynamic>> reviews = [
   },
 ];
 
-final List<Map<String, String>> lists = [
+final List<Map<String, dynamic>> lists = [
   {
-    'image': 'assets/grace.jpg', // Replace with local image asset
-    'title': 'Top 10 Albums of 2025',
-    'description': 'A curated list of the best albums released this year.',
+    'image': 'assets/blue.png', // Replace with local image asset
+    'title': 'Playlist 1',
+    'description': 'This would be the description of a playlist',
+    'reviewer' : 'username',
+    'reviewedBy' : 'username',
+    'creator' : 'Creator 1',
+    'createdBy' : 'Creator 2',
+    'year' : 'October 12 1994',
+    'number' : 1,
+    'genre' : 'Rock',
+    'artist' : 'Jeff Buckley',
+    'number_of_reviews' : 20,
+    'rating': 5,
+    'imageCreator' : 'assets/blue.jpg'
   },
   {
-    'image': 'assets/grace.jpg', // Replace with local image asset
-    'title': 'Best Chill Albums',
-    'description': 'Albums perfect for a relaxing evening.',
+    'image': 'assets/brown.png', // Replace with local image asset
+    'title': 'Playlist 2',
+    'description': 'This would be the description of a playlist',
+    'reviewer' : 'username',
+    'reviewedBy' : 'username',
+    'creator' : 'username',
+    'createdBy' : 'username',
+    'year' : 'October 12 1994',
+    'number' : 2,
+    'genre' : 'Rock',
+    'artist' : 'Hum',
+    'number_of_reviews' : 20,
+    'rating': 5,
+    'imageCreator' : 'space.jpg'
+  },
+  {
+    'image': 'assets/goo.jpg', // Replace with local image asset
+    'title': 'Goo',
+    'description': 'This is a text field',
+    'reviewer' : 'username',
+    'reviewedBy' : 'username',
+    'creator' : 'username',
+    'createdBy' : 'username',
+    'year' : 'October 12 1994',
+    'number' : 3,
+    'genre' : 'Rock',
+    'artist' : 'Sonic Youth',
+    'number_of_reviews' : 20,
+    'rating': 5,
+    'imageCreator' : 'space.jpg'
+  },
+  {
+    'image': 'assets/withoutasound.jpg', // Replace with local image asset
+    'title': 'Goo',
+    'description': 'This is a text field',
+    'reviewer' : 'username',
+    'reviewedBy' : 'username',
+    'creator' : 'username',
+    'createdBy' : 'username',
+    'year' : 'October 12 1994',
+    'number' : 4,
+    'genre' : 'Rock',
+    'artist' : 'Dinosaur Jr.',
+    'number_of_reviews' : 20,
+    'rating': 5,
+    'imageCreator' : 'space.jpg'
+  },
+  {
+    'image': 'assets/mellon.jpg', // Replace with local image asset
+    'title': 'Mellon Collie and the Infinite Sadness',
+    'description': 'This is a text field',
+    'reviewer' : 'username',
+    'reviewedBy' : 'username',
+    'creator' : 'username',
+    'createdBy' : 'username',
+    'year' : 'October 12 1994',
+    'number' : 5,
+    'genre' : 'Rock',
+    'artist' : 'The Smashing Pumpkins',
+    'number_of_reviews' : 20,
+    'rating': 5,
+    'imageCreator' : 'space.jpg'
   },
 ];
 
-final List<Map<String, dynamic>> activities = [
-  {
-    'image': 'assets/grace.jpg', // Replace with local image asset
-    'title': 'Grace',
-    'description': 'A curated list of the best albums released this year.',
-    'reviewedBy': 'You',
-  },
-  {
-    'image': 'assets/grace.jpg', // Replace with local image asset
-    'title': 'Grace',
-    'description': 'Updated.',
-    'listBy': 'You',
-  },
-];
 
 
 final List<Map<String, dynamic>> charts = [

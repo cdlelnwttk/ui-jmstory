@@ -26,16 +26,21 @@ class ListTabPage extends StatefulWidget {
 class _ListTabPageState extends State<ListTabPage> {
   int _selectedIndex = 0;
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListTabWidget(
-        reviews: widget.reviews,
-        listName: widget.listName,
-        description: widget.description,
-        imagePath: widget.imagePath,
-        initialFeed: widget.initialFeed,
-      ),
-    );
+    @override
+    Widget build(BuildContext context) {
+
+      return Scaffold(
+        body: SingleChildScrollView(
+          child: ListTabWidget(
+            reviews: widget.reviews,
+            listName: widget.listName,
+            description: widget.description,
+            imagePath: widget.imagePath,
+            initialFeed: widget.initialFeed,
+          ),
+        ),
+      );
+    }
+
   }
-}
+

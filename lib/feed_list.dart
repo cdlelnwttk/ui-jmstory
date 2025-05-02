@@ -11,6 +11,7 @@ class FeedList extends StatelessWidget {
   final int f;
   final int j;
   final int remove;
+  final bool fromProfile;
   const FeedList({
     Key? key,
     required this.items,
@@ -21,6 +22,7 @@ class FeedList extends StatelessWidget {
     required this.f,
     required this.j,
     required this.remove,
+    required this.fromProfile,
   }) : super(key: key);
 
   @override
@@ -56,6 +58,7 @@ class FeedList extends StatelessWidget {
           outside: j,
           imageCreator: item['imageCreator'] ?? '',
           remove : remove,
+          isListPage: fromProfile,
         );
       },
     );

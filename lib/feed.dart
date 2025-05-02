@@ -18,6 +18,7 @@ class _FeedPageState extends State<FeedPage> {
   final int f = 0;
   final int j = 0;
   final int remove = 1;
+  final bool fromProfile = false;
   // This function adds a new item to the feed
   void _addToFeed(Map<String, dynamic> newItem) {
     setState(() {
@@ -68,6 +69,7 @@ class _FeedPageState extends State<FeedPage> {
               f: f,
               j: j,
               remove: remove,
+              fromProfile: fromProfile,
             ),
           ),
         ],

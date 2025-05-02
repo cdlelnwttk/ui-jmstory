@@ -5,6 +5,9 @@ import 'package:untitled3/album_widget.dart';
 import 'star_rating.dart';
 import 'dart:io';
 import 'list_tab_widget.dart';
+import 'bottom_nav.dart';
+import 'nav_logic.dart';
+import 'drawer.dart';
 
 void main() {
   runApp(MyApp());
@@ -39,7 +42,7 @@ class _SearchPageState extends State<SearchPage> {
   List<Map<String, dynamic>> _filteredData = [];
   Map<String, dynamic>? _selectedReview;
   bool _showSuggestions = false;
-
+  int _selectedIndex = 0;
   @override
   void initState() {
     super.initState();
@@ -91,9 +94,8 @@ class _SearchPageState extends State<SearchPage> {
     return DefaultTabController(
       length: 3, // Updated the Tab length for 'Releases', 'List', 'Users'
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Edit Profile'),
-        ),
+        appBar: AppBar(),
+        drawer: CustomDrawer(),
         body: Column(
           children: [
             // --- Search Bar ---
@@ -193,6 +195,7 @@ class _SearchPageState extends State<SearchPage> {
                             outside: 0,
                             imageCreator: _selectedReview!['imageCreator']!,
                             remove: 0,
+                            isListPage: false,
                           ),
                         ],
                       ],
@@ -233,6 +236,15 @@ class _SearchPageState extends State<SearchPage> {
               ),
             ),
           ],
+        ),
+        bottomNavigationBar: CustomBottomNavBar(
+          currentIndex: _selectedIndex,
+          onTap: (index) {
+            setState(() {
+              _selectedIndex = index;
+            });
+            handleNavTap(context, index); // use shared nav logic
+          },
         ),
       ),
     );

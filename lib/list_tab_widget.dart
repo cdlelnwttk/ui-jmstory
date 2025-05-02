@@ -85,15 +85,6 @@ class _ListTabWidgetState extends State<ListTabWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.listName ?? 'List'),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context); // Pops the current screen
-          },
-        ),
-      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -231,6 +222,7 @@ class _ListTabWidgetState extends State<ListTabWidget> {
                               outside: 0,
                               imageCreator: _selectedItem!['imageCreator'],
                               remove: 0,
+                              isListPage: false,
                             ),
                             Positioned(
                               top: 0,
@@ -291,7 +283,8 @@ class _ListTabWidgetState extends State<ListTabWidget> {
                             imageCreator: item['imageCreator'],
                             remove: _showSearchView
                                 ? 1
-                                : 0, // Remove is 0 when title, image, and description are visible, 1 when the search bar is visible
+                                : 0,
+                            isListPage: false,
                           ),
                         ),
                     ],
@@ -300,15 +293,6 @@ class _ListTabWidgetState extends State<ListTabWidget> {
             ],
           ),
         ),
-      ),
-      bottomNavigationBar: CustomBottomNavBar(
-        currentIndex: _selectedIndex,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-          handleNavTap(context, index); // use shared nav logic
-        },
       ),
     );
   }

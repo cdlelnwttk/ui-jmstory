@@ -25,7 +25,8 @@ class CustomInfoCard extends StatefulWidget {
   final int charts;
   final int outside;
   final String imageCreator;
-  final int remove; // NEW: determines whether to show the remove button
+  final int remove;
+  final bool isListPage;  // Change to a boolean flag
 
   const CustomInfoCard({
     required this.imagePath,
@@ -49,7 +50,8 @@ class CustomInfoCard extends StatefulWidget {
     required this.charts,
     required this.outside,
     required this.imageCreator,
-    required this.remove, // Default value is 0 (do not show remove button)
+    required this.remove,
+    required this.isListPage,  // Include the boolean flag
     Key? key,
   }) : super(key: key);
 
@@ -58,18 +60,18 @@ class CustomInfoCard extends StatefulWidget {
 }
 
 class _CustomInfoCardState extends State<CustomInfoCard> {
-  bool _isVisible = true; // Control visibility of the card
+  bool _isVisible = true;
 
   void _handleRemove() {
     setState(() {
-      _isVisible = false; // Hide the card when the remove button is pressed
+      _isVisible = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     if (!_isVisible) {
-      return SizedBox.shrink();  // Return an empty widget if not visible
+      return SizedBox.shrink();
     }
 
     return Padding(
@@ -106,10 +108,9 @@ class _CustomInfoCardState extends State<CustomInfoCard> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Image on the left
               GestureDetector(
                 onTap: () {
-                  if (widget.list == 1 && widget.outside == 0) {
+                  if (widget.list == 1) {  // Check the boolean flag
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -128,6 +129,7 @@ class _CustomInfoCardState extends State<CustomInfoCard> {
                           genre: widget.genre,
                           artist: widget.artist,
                           number_of_reviews: widget.number_of_reviews,
+                          fromProfilePage: widget.isListPage,
                         ),
                       ),
                     );
@@ -164,7 +166,6 @@ class _CustomInfoCardState extends State<CustomInfoCard> {
                 ),
               ),
               SizedBox(width: 15),
-              // Main content in center
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -289,7 +290,6 @@ class _CustomInfoCardState extends State<CustomInfoCard> {
                   ],
                 ),
               ),
-              // Number or remove icon on the right
               if (widget.charts == 1)
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
@@ -304,7 +304,7 @@ class _CustomInfoCardState extends State<CustomInfoCard> {
               if (widget.remove == 1)
                 IconButton(
                   icon: Icon(Icons.close),
-                  onPressed: _handleRemove, // Hide card when pressed
+                  onPressed: _handleRemove,
                   tooltip: 'Remove',
                 ),
             ],
@@ -314,8 +314,3 @@ class _CustomInfoCardState extends State<CustomInfoCard> {
     );
   }
 }
-
-
-
-
-
