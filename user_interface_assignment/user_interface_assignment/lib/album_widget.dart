@@ -283,7 +283,7 @@ class _CustomInfoCardState extends State<CustomInfoCard> {
                           style: TextStyle(
                             fontSize: 14,
                             fontStyle: FontStyle.italic,
-                            color: Colors.grey,
+                            color: Colors.grey[800],
                           ),
                         ),
                       ),
